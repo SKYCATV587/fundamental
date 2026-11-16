@@ -242,3 +242,31 @@ function TransSubTextNode(node) {
     });
     observer.observe(targetNode, observer_config);
 }();
+
+/* ==== 多行文本逐行汉化补丁（由汉化补全脚本追加） ==== */
+(function () {
+    var baseCnItem = cnItem;
+    var LATIN = /[A-Za-z]/;
+    function transLine(line, node) {
+        if (!line || !LATIN.test(line)) return line;
+        var m = line.match(/^(\s*)([\s\S]*?)(\s*)$/);
+        var lead = m[1], core = m[2], tail = m[3];
+        if (!core) return line;
+        var out = baseCnItem(core, node);
+        return out === core ? line : lead + out + tail;
+    }
+    cnItem = function (text, node) {
+        if (typeof text !== 'string') return text;
+        var norm = text.indexOf('\r') === -1 ? text : text.replace(/\r\n/g, '\n');
+        var whole = baseCnItem(norm, node);
+        if (whole !== norm) return whole;
+        if (norm.indexOf('\n') === -1) return whole;
+        var lines = norm.split('\n');
+        var changed = false;
+        for (var i = 0; i < lines.length; i++) {
+            var t = transLine(lines[i], node);
+            if (t !== lines[i]) { lines[i] = t; changed = true; }
+        }
+        return changed ? lines.join('\n') : whole;
+    };
+})();

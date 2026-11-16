@@ -3364,7 +3364,7 @@ var cnRegReplace = new Map([
     [/^ \(Tier (.+) out of (.+), \+(.+) recently\)$/, '（级别 $1 / $2，目前 +$3）'],
     [/^ \(Tier (.+) out of (.+)\)$/, '（级别 $1 / $2）'],
     [/^ \(Tier (.+)\)$/, '（级别 $1）'],
-    [/^Boost global speed by (.+).$/, '使全局速度乘以 $1。'],
+    [/^Boost global speed by ([\d.eE+\-]+)\.$/, '使全局速度乘以 $1。'],
     [/^Boost global speed and Stage reset reward by (.+), strength is based on Supervoid progress.\nEvery level will also improve 2 levels of 'Strange gain' Inflation to boost global speed while inside any Void.$/,
          '使全局速度和阶段重置奖励提升至 $1 倍，强度基于超级虚空进度。\n每级还可改进 2 级“奇异获取”膨胀，使它在任意虚空中提升全局速度。'],
     [/^Boost global speed and Stage reset reward by (.+), strength is based on Supervoid progress in the current Universe.\nEvery level will also improve 2 levels of 'Strange gain' Inflation to boost global speed while inside any Void.$/,
@@ -4392,4 +4392,1287 @@ var cnRegReplace = new Map([
 */
 //感谢做汉化插件的大佬们！~~
 //以及感谢为我提供存档的大佬
+/* ================================================================
+ * 补充汉化补丁
+ * 用途：补齐原词条表未覆盖的名称、界面标签、通知、更新日志与带数字的动态句子。
+ * 说明：仅在 cnItems / cnRegReplace 中不存在该条目时写入，不会覆盖已有译文。
+ * ================================================================ */
+(function () {
+    var extraItems = {
+        "- Abyss full rebalance and End reset rework - Auto Stage now has different modes - Max export rewards is now 12 hours - Minor balancing and new content for Abyss": "- 深渊全面重平衡与终结重置重做 - 自动阶段现在有多种模式 - 导出最大奖励现在为 12 小时 - 深渊的小幅平衡调整与新内容",
+        "- Abyss rework - New (second) Challenge - Global footer stats - Small visual improvements - Improved swiping hotkeys for Phones": "- 深渊重做 - 新增（第二个）挑战 - 全局页脚统计 - 小幅视觉改进 - 改进手机端滑动热键",
+        "- Added hotkeys list - Option to remove text movement - Ability to rename the save file": "- 新增热键列表 - 可关闭文字移动效果 - 可重命名存档文件",
+        "- Custom scrolls - Notifications": "- 自定义滚动条 - 通知",
+        "- First published version - Submerged Stage placeholder": "- 首个发布版本 - 湮没阶段的占位内容",
+        "- Massive rebalance and reworks for all Stages - New content (Void) - Further balance changes": "- 所有阶段的大幅重平衡与重做 - 新内容（虚空） - 进一步的平衡调整",
+        "- Minor speed up to all Stages past Microworld": "- 微观世界之后的所有阶段小幅加速",
+        "- More balance changes for late game": "- 更多后期平衡调整",
+        "- New content (Abyss) - Full game rebalance - Custom hotkeys - Updated supports": "- 新内容（深渊） - 全游戏重平衡 - 自定义热键 - 更新支持信息",
+        "- New content (Accretion) - Submerged Stage extended": "- 新内容（吸积） - 湮没阶段扩展",
+        "- New content (Intergalactic) - Balance changes for late game": "- 新内容（星系际） - 后期平衡调整",
+        "- New content (Interstellar) - Basic loading screen - Added hotkeys": "- 新内容（星际） - 基础加载界面 - 新增热键",
+        "- New content (Milestones) - More Interstellar and late game balance": "- 新内容（里程碑） - 更多星际与后期平衡",
+        "- New content (Strangeness) - Microworld Stage rework - Stats for the Save file name": "- 新内容（奇异升级） - 微观世界阶段重做 - 存档文件名统计",
+        "- New content (Supervoid) - Challenges now reload save file on exit": "- 新内容（超级虚空） - 挑战退出时现在会重新加载存档",
+        "- New content (Vacuum) - Version window - Permanently removed text movement": "- 新内容（真空） - 版本窗口 - 永久移除文字移动效果",
+        "- Reworked balance for all Stages past first reset cycle - Most of settings are now saved separate from save file - Some more work on Mobile device support": "- 重做第一个重置循环之后所有阶段的平衡 - 大部分设置现在与存档分开保存 - 进一步完善移动设备支持",
+        "- Speed up to all Stages - Basic events - Added numbers format": "- 所有阶段加速 - 基础事件 - 新增数字格式",
+        "- Stats subtab": "- 统计子标签",
+        "- Submerged Stage rework - Mobile device support": "- 湮没阶段重做 - 移动设备支持",
+        "- Supervoid rework - Abyss small rebalance - Offline ticks are now as effective as Online - Inflation loadouts - Minor Strangeness rebalance": "- 超级虚空重做 - 深渊小幅重平衡 - 离线 tick 现在与在线同样有效 - 膨胀预设 - 奇异升级小幅重平衡",
+        "- True Vacuum balance changes - Submerged Stage minor balance - Replay event button - History for Stage resets": "- 真真空平衡调整 - 湮没阶段小幅平衡 - 重放事件按钮 - 阶段重置历史",
+        "- True Vacuum minor balance - Images no longer unload - Screen reader support reworked": "- 真真空小幅平衡 - 图片不再卸载 - 屏幕阅读器支持重做",
+        "- True Vacuum small balance changes - Upgrades and Researches merged - Copy to the clipboard, load from string save file options - More true Vacuum balance - Reworked time related formats - Offline time reworked": "- 真真空小幅平衡调整 - 升级与研究合并 - 新增复制到剪贴板、从字符串存档载入选项 - 更多真真空平衡 - 重做时间相关格式 - 重做离线时间",
+        "-New content (Multiverse) - Rebalances in later parts of game - Improved global resources tracker - Added default loadout - Added save slots": "-新内容（多元宇宙） - 游戏后期重平衡 - 改进全局资源追踪器 - 新增默认预设 - 新增存档槽位",
+        ", and also all": "，以及所有",
+        ", if false Vacuum wasn't cleared yet": "，如果假真空尚未清除",
+        ", Tritium and reducing Goals requirement": "、氚并降低目标需求",
+        "'Gravitational bound' Strangeness is no longer be required for Intergalactic auto Upgrades/Researches to work": "“引力束缚”奇异升级不再是星系际自动升级/研究生效的必要条件",
+        "(Will make max if set to 0 or less, ignored when holding Shift or Ctrl)": "（设为 0 或更小时自动取最大值，按住 Shift 或 Ctrl 时忽略）",
+        "| Big Freezes:": "| 大冻结：",
+        "| Lowest": "| 最低",
+        "| Pre-softcap production is": "| 软上限前产量为",
+        "0 Quantum foam": "0 量子泡沫",
+        "Ablative armor": "烧蚀装甲",
+        "Aerodynamic drag": "气动阻力",
+        "Allow zoom": "允许缩放",
+        "Auto Abyss Stage": "自动深渊阶段",
+        "Auto Gravitons": "自动引力子",
+        "Auto Quantum foam": "自动量子泡沫",
+        "Auto Quasiparticles": "自动准粒子",
+        "Auto Structures": "自动结构",
+        "auto Upgrades": "自动升级",
+        "Auto Virtual particles": "自动虚粒子",
+        "Automatic Collapse": "自动坍缩",
+        "Automatic Discharge": "自动放能",
+        "Automatic Galaxy": "自动星系",
+        "Automatic Merge": "自动合并",
+        "Automatic Rank": "自动等阶",
+        "Automatic Stage": "自动阶段",
+        "Automatic Vaporization": "自动汽化",
+        "Automatically exit after running out of time": "时间耗尽后自动退出",
+        "Awaiting game reload": "等待游戏重新加载",
+        "Awaiting new value for the hotkey": "等待新的热键值",
+        "Better Deuterium": "更好的氘",
+        "Better Drop production": "更好的水滴生产",
+        "Better improvement": "更好的改进",
+        "Better Mole production": "更好的摩尔生产",
+        "Better rewards": "更好的奖励",
+        "Bigger Puddles": "更大的水坑",
+        "Bigger Structures": "更大的结构",
+        "Brownian motion": "布朗运动",
+        "can create the Universe": "可以创造宇宙",
+        "Carbon-Nitrogen-Oxygen cycle": "碳-氮-氧循环",
+        "Central dominant Galaxy": "中央主星系",
+        "Change current Vacuum state to true": "将当前真空状态切换为真",
+        "Cheaper Discharges": "更便宜的放能",
+        "Cheaper Stars": "更便宜的星球",
+        "Cloud density": "云密度",
+        "Collapse improvement": "坍缩改进",
+        "Compact Groups": "致密星系群",
+        "completion:": "完成度：",
+        "Conservation of Energy": "能量守恒",
+        "Conservation of Mass": "质量守恒",
+        "Conservation of resources": "资源守恒",
+        "Contact binary": "接触双星",
+        "Cosmon extension": "宇宙子扩展",
+        "Could not copy text into the clipboard": "无法将文本复制到剪贴板",
+        "Could not copy text into the clipboard, press 'Confrim' to save it as a file instead": "无法复制到剪贴板，请按“确认”将其保存为文件",
+        "Couldn't find any save files": "找不到任何存档文件",
+        "Create the 'Nuclear fission'": "创建“核裂变”",
+        "currently inside the Void": "当前位于虚空内",
+        "Dark aggregation": "暗黑聚合",
+        "Dark nucleation": "暗黑成核",
+        "Darkest flow": "最暗的流动",
+        "Darkness Tier 2 (WIP)": "黑暗等级 2（开发中）",
+        "Delete all loadouts?": "删除所有预设？",
+        "Delete save": "删除存档",
+        "Destructive collisions": "毁灭性碰撞",
+        "Disable auto Quasiparticles": "禁用自动准粒子",
+        "Disable auto Virtual particles": "禁用自动虚粒子",
+        "Discharge canceled, requirements are no longer met": "放能已取消，需求不再满足",
+        "Discharge improvement": "放能改进",
+        "Distributary channel": "支流河道",
+        "Edit global resources window": "编辑全局资源窗口",
+        "Efficient growth": "高效增长",
+        "Efficient submersion": "高效浸没",
+        "Element automatization": "元素自动化",
+        "End reset canceled, requirements are no longer met": "终结重置已取消，需求不再满足",
+        "Energy increase": "能量增加",
+        "Error encountered, ID doesn't exist": "出现错误，ID 不存在",
+        "Error encountered, prevented spending of NaN": "出现错误，已阻止花费 NaN",
+        "Error encountered, Query failed to find anything": "出现错误，查询没有找到任何内容",
+        "Event 10: Universal End": "事件 10：宇宙终结",
+        "Event 11: Stability unlocked": "事件 11：稳定性解锁",
+        "Event 12: Better End": "事件 12：更好的终结",
+        "Event 13: Multiverse": "事件 13：多元宇宙",
+        "Event 2: Clouds softcap": "事件 2：云的软上限",
+        "Event 3: New Rank": "事件 3：新等阶",
+        "Event 4: New Elements": "事件 4：新元素",
+        "Event 5: Intergalactic": "事件 5：星系际",
+        "Event 6: True Vacuum": "事件 6：真真空",
+        "Event 7: Void unlocked": "事件 7：虚空解锁",
+        "Event 8: First Merge": "事件 8：首次合并",
+        "Event 9: Inflation": "事件 9：膨胀",
+        "Event doesn't exist": "事件不存在",
+        "Everything that needs to be known already is known": "该知道的都已经知道了",
+        "Exclusive": "专属",
+        "Export reward is disabled when using developer mode": "使用开发者模式时禁用导出奖励",
+        "Export save": "导出存档",
+        "Exports max timer and max reward increased by 2": "导出最大计时器和最大奖励增加 2",
+        "Extra strong force": "额外强力",
+        "Failed to import": "导入失败",
+        "Failed to load global settings, default ones used instead": "加载全局设置失败，已使用默认设置",
+        "Failed to re-enter the": "重新进入失败：",
+        "Failed to save global setting": "保存全局设置失败",
+        "Failed to save the game": "保存游戏失败",
+        "Faster Accretion": "更快的吸积",
+        "Faster aggregation": "更快的聚合",
+        "Fix import and inputs": "修复导入与输入",
+        "Free Discharge": "免费放能",
+        "Full changelog": "完整更新日志",
+        "Fundamental boost": "基本原理增益",
+        "Galactic Merger": "星系合并",
+        "Galactic tide": "星系潮汐",
+        "Game paused": "游戏已暂停",
+        "Game unpaused": "游戏已继续",
+        "Gamma-ray burst": "伽马射线暴",
+        "Global boost": "全局增益",
+        "Global resources edit window": "全局资源编辑窗口",
+        "Globular cluster": "球状星团",
+        "Granular convection": "颗粒对流",
+        "Gravitational automatization": "引力自动化",
+        "Gravitational binding Energy": "引力束缚能",
+        "Gravitational bound": "引力束缚",
+        "Gravitational Collapse": "引力坍缩",
+        "Gravitational field": "引力场",
+        "Helium fusion": "氦聚变",
+        "Hide window": "隐藏窗口",
+        "Higher density": "更高密度",
+        "Higher levels": "更高等级",
+        "Highest self-made Universes on End resets:": "终结重置中自建宇宙的最高值：",
+        "Hotkeys menu": "热键菜单",
+        "Hotter Stars": "更热的星球",
+        "Hover to create": "悬停以创建",
+        "Hydrostatic equilibrium": "流体静力平衡",
+        "Improve auto Merge to reset early when can afford new Universe": "改进自动合并，使其在能负担新宇宙时提前重置",
+        "Improve End resets rewards base with Arithmetic progression of self-made Universes and a Step of": "以自建宇宙的等差数列改进终结重置奖励基础，步长为",
+        "Improved flow": "改进的流动",
+        "Improved formula": "改进的公式",
+        "Improved Offline": "改进的离线",
+        "Improved Satellites": "改进的卫星",
+        "Improved Tritium": "改进的氚",
+        "Inelastic collisions": "非弹性碰撞",
+        "Inflaton extension": "膨胀点扩展",
+        "Inflatons have been refunded": "膨胀点已退还",
+        "Information for the Screen reader": "屏幕阅读器信息",
+        "Inner Black hole": "内部黑洞",
+        "Input doesn't match anything": "输入没有匹配任何内容",
+        "Interacting Galaxies": "相互作用星系",
+        "Interacting Groups": "相互作用星系群",
+        "Jeans instability": "金斯不稳定性",
+        "Jeans Mass": "金斯质量",
+        "Keep mouse events": "保留鼠标事件",
+        "Keep tab index on created Upgrades": "创建升级时保留标签索引",
+        "Last update:": "最后更新：",
+        "Later Preons": "更晚的前子",
+        "Loaded loadout": "已载入预设",
+        "Loadouts": "预设",
+        "Magma ocean": "岩浆海",
+        "Main giants": "主序巨星",
+        "Mass delay": "质量延迟",
+        "Mass transfer": "质量转移",
+        "Max create": "最大创建",
+        "Mechanical spread": "机械扩散",
+        "Merge canceled, requirements are no longer met": "合并已取消，需求不再满足",
+        "Merge results": "合并结果",
+        "Merge score": "合并分数",
+        "Merged Galaxies": "已合并星系",
+        "Molecular cloud": "分子云",
+        "Molecules to Moles": "分子到摩尔",
+        "More Cosmons": "更多宇宙子",
+        "More global speed": "更多全局速度",
+        "More levels": "更多等级",
+        "More massive bodies": "更大质量的天体",
+        "More Merges": "更多合并",
+        "More Milestones": "更多里程碑",
+        "More Moles": "更多摩尔",
+        "More resources": "更多资源",
+        "More spread": "更多扩散",
+        "More Strangeness": "更多奇异升级",
+        "More streams": "更多水流",
+        "Move into the footer": "移动到页脚",
+        "Multiverse": "多元宇宙",
+        "Multiverses": "多元宇宙",
+        "Multiverses do not get disabled while inside Challenges (WIP)": "处于挑战中时多元宇宙不会被禁用（开发中）",
+        "Multiverses:": "多元宇宙：",
+        "Natural Vaporization": "自然汽化",
+        "New Upgrade": "新升级",
+        "Newer Upgrade": "更新的升级",
+        "No new completions awarded due to reaching time limit": "因达到时间上限，未获得新的完成次数",
+        "Nuclear fission": "核裂变",
+        "Nuclear fusion": "核聚变",
+        "Nucleation canceled, requirements are no longer met": "成核已取消，需求不再满足",
+        "Only numbers can be used here": "此处只能使用数字",
+        "Out of Challenge time": "挑战时间耗尽",
+        "Out of time": "时间耗尽",
+        "Overachiever": "超常成就",
+        "Passive Ranks ‒ Improve second level of 'Automatic Rank' by making Ranks not to reset anything and more": "被动等阶 ‒ 改进“自动等阶”的第二级，使等阶不再重置任何内容并获得更多效果",
+        "Pebble accretion": "卵石吸积",
+        "per Big Freeze": "每次大冻结",
+        "per day": "每天",
+        "per eon": "每世",
+        "per hour": "每小时",
+        "per megaannum": "每百万年",
+        "per millennium": "每千年",
+        "per minute": "每分钟",
+        "per second": "每秒",
+        "per year": "每年",
+        "Permanent ones are": "永久的为",
+        "Planetary differentiation": "行星分化",
+        "Planetary nebula": "行星状星云",
+        "Planetary system": "行星系统",
+        "Post softcap production is": "软上限后产量为",
+        "Preons hardcap delay": "前子硬上限延迟",
+        "Proton capture": "质子俘获",
+        "Proton-Proton chain": "质子-质子链",
+        "Protoplanetary disk": "原行星盘",
+        "Quantum": "量子",
+        "Quantum accumulation": "量子累积",
+        "Quantum automatization": "量子自动化",
+        "Quantum fluctuations": "量子涨落",
+        "Quantum gain": "量子获取",
+        "Quantum gravity": "量子引力",
+        "Quantum improvement": "量子改进",
+        "Quantum maximum": "量子上限",
+        "Quark-nova": "夸克新星",
+        "Quasi-automatization": "准自动化",
+        "Quasi-gain": "准粒子获取",
+        "Quasi-improvement": "准粒子改进",
+        "Quasi-quantum": "准量子",
+        "Query failed to find anything": "查询没有找到任何内容",
+        "Radiative cooling": "辐射冷却",
+        "Radioactive decay": "放射性衰变",
+        "Radioactive Discharge": "放射性放能",
+        "Rain Clouds": "雨云",
+        "Rank boost": "等阶增益",
+        "Rank improvement": "等阶改进",
+        "Rank increase canceled, requirements are no longer met": "等阶提升已取消，需求不再满足",
+        "Rank raise": "等阶提升",
+        "Ready to Quantize": "可以量化",
+        "Require confirmation to exit current Challenge": "退出当前挑战需要确认",
+        "Requirement decrease": "需求降低",
+        "Requires 1 Big Crunch:": "需要 1 次大挤压：",
+        "Requires 1 Big Freeze: (WIP)": "需要 1 次大冻结：（开发中）",
+        "Requires 1 Big Rip:": "需要 1 次大撕裂：",
+        "Requires 1 Universe:": "需要 1 个宇宙：",
+        "Requires 13 Universes:": "需要 13 个宇宙：",
+        "Requires 2 Universes:": "需要 2 个宇宙：",
+        "Requires 21 Universes:": "需要 21 个宇宙：",
+        "Requires 3 Universes:": "需要 3 个宇宙：",
+        "Requires 34 Universes:": "需要 34 个宇宙：",
+        "Requires 5 Universes:": "需要 5 个宇宙：",
+        "Requires 55 Universes:": "需要 55 个宇宙：",
+        "Requires 8 Universes:": "需要 8 个宇宙：",
+        "Reset automatization": "重置自动化",
+        "reset, refunds and resets": "重置，并退还与重置",
+        "Resources": "资源",
+        "Result of Vacuum Instability, investigate at your own will": "真空不稳定的结果，可自行探索",
+        "Return back to": "返回到",
+        "Ring system": "环系统",
+        "Rubble pile": "碎石堆",
+        "Satellite system": "卫星系统",
+        "Save file version is not allowed": "不允许使用该存档版本",
+        "Screen reader support is enabled, disable it if its not required": "屏幕阅读器支持已开启，如不需要请关闭",
+        "seconds and not yet hardcapped, always prevented if value is at least 1e60": "秒且尚未达到硬上限，若数值至少为 1e60 则始终阻止",
+        "Self-gravity": "自引力",
+        "Self-interaction": "自相互作用",
+        "Shift": "Shift",
+        "Softcap ^": "软上限 ^",
+        "Space weathering": "空间风化",
+        "Star formation": "恒星形成",
+        "Star system": "星球系统",
+        "Starburst Galaxy": "星暴星系",
+        "Starburst region": "星暴区",
+        "Start End resets with another bonus Universe, improve Big Rip Milestone Step and starting value by +": "开始终结重置时再获得一个额外宇宙，将大撕裂里程碑的步长和起始值提高 +",
+        "Start End resets with bonus Universes equal to the highest sum of all self-made Universe types on any End reset": "开始“终结”重置时，获得等同于任意一次终结重置中自建宇宙类型总和最高值的额外宇宙",
+        "Start Vacuum resets with Strange quarks equal to max(current self-made Universes, highest on any End reset) ^": "开始真空重置时获得奇异夸克，等于 max(当前自建宇宙，任意终结重置的最高值) ^",
+        "starts at 600 seconds of pre-softcap production": "从 600 秒的软上限前产量开始",
+        "Storm Clouds": "暴风云",
+        "Strange boost": "奇异增益",
+        "Strange gain": "奇异获取",
+        "Strange growth": "奇异增长",
+        "Stranger gain": "奇异粒子获取",
+        "Streaming instability": "流动不稳定性",
+        "Strong force": "强力",
+        "Stronger Protium": "更强的氕",
+        "Stronger surface stress": "更强的表面应力",
+        "Stronger surface tension": "更强的表面张力",
+        "Structures:": "结构：",
+        "Submersion boost to Cosmic dust from Drops:": "水滴对宇宙尘埃的浸没增益：",
+        "Super Star cluster": "超星团",
+        "Super-Ranks": "超级等阶",
+        "Supervoid unlocks: (true Vacuum only)": "超级虚空解锁：（仅限真真空）",
+        "Surface stress": "表面应力",
+        "Surface tension": "表面张力",
+        "Tachyon softcap information:": "快子软上限信息：",
+        "Tachyons": "快子",
+        "Thermal expansion": "热膨胀",
+        "Tidal force": "潮汐力",
+        "tier:": "层级：",
+        "Time dilation": "时间膨胀",
+        "True Vacuum starts with 'Conservation of Mass' Strangeness level 2": "真真空以“质量守恒”奇异升级 2 级开始",
+        "Turbulent viscosity": "湍流粘性",
+        "Type frequency": "类型频率",
+        "Unlock auto End resets (WIP) and auto load default loadout after any End reset": "解锁自动终结重置（开发中），并在任意终结重置后自动载入默认预设",
+        "Unlock auto Universes and start false Vacuum resets with 'Automatic Merge' Strangeness at level 1": "解锁自动宇宙，并以“自动合并”奇异升级 1 级开始假真空重置",
+        "Upgrade automatization": "升级自动化",
+        "Vaporization improvement": "汽化改进",
+        "Verse": "宇宙",
+        "Viscous spreading": "粘性扩散",
+        "Water Accretion": "吸水",
+        "Water spread": "水的扩散",
+        "Weak force": "弱力",
+        "White dwarfs": "白矮星",
+        "White holes": "白洞"
+    };
+    for (var _k in extraItems) {
+        if (!Object.prototype.hasOwnProperty.call(cnItems, _k)) cnItems[_k] = extraItems[_k];
+    }
+    var extraRegex = [
+        [/^Caused End reset$/, "已触发终结重置"],
+        [/^Caused Collapse reset$/, "已触发坍缩重置"],
+        [/^Caused Galaxy reset$/, "已触发星系重置"],
+        [/^Caused Stage reset$/, "已触发阶段重置"],
+        [/^Caused Discharge reset$/, "已触发放能重置"],
+        [/^Caused Nucleation reset$/, "已触发成核重置"],
+        [/^Caused Vaporization reset$/, "已触发汽化重置"],
+        [/^Caused Merge reset$/, "已触发合并重置"],
+        [/^Caused (.+) reset$/, "已触发$1重置"],
+        [/^Prevented End reset because (.+) Reset anyway\?$/, "已阻止终结重置（$1）。仍要重置吗？"],
+        [/^Prevented Collapse because (.+) Reset anyway\?$/, "已阻止坍缩（$1）。仍要重置吗？"],
+        [/^Prevented Discharge because (.+) Reset anyway\?$/, "已阻止放能（$1）。仍要重置吗？"],
+        [/^Prevented Merging because (.+) Reset anyway\?$/, "已阻止合并（$1）。仍要重置吗？"],
+        [/^Prevented Nucleation because (.+) Reset anyway\?$/, "已阻止成核（$1）。仍要重置吗？"],
+        [/^Prevented Vaporization because (.+) Reset anyway\?$/, "已阻止汽化（$1）。仍要重置吗？"],
+        [/^Prevented Rank increase because (.+) Reset anyway\?$/, "已阻止等阶提升（$1）。仍要重置吗？"],
+        [/^Prevented (.+?)Stage reset because (.+) Reset anyway\?$/, "已阻止$1阶段重置（$2）。仍要重置吗？"],
+        [/^Prevented (.+) because (.+) Reset anyway\?$/, "已阻止$1（$2）。仍要重置吗？"],
+        [/^Offline calculation started$/, "离线计算已开始"],
+        [/^Offline calculation ended$/, "离线计算已结束"],
+        [/^Error encountered, couldn't create (.+) of (.+)$/, "出现错误，无法创建 $1 个 $2"],
+        [/^Error encountered, couldn't gain (.+) of (.+)$/, "出现错误，无法获得 $1 个 $2"],
+        [/^Made (.+) '(.+)'$/, "制造了 $1 个“$2”"],
+        [/^Saved loadout as '(.+)'$/, "已保存预设为“$1”"],
+        [/^Delete selected loadout '(.+)'\? \(Hold shift before clicking 'delete' to delete all\)$/, "删除选中的预设“$1”？（点击“删除”前按住 Shift 可全部删除）"],
+        [/^Level increased (to|and maxed at) (.+) for the '(.+)' Stage Research$/, "“$3”阶段研究等级提升至 $2"],
+        [/^Level increased (to|and maxed at) (.+) for the '(.+)' Special Research$/, "“$3”特殊研究等级提升至 $2"],
+        [/^Level increased (to|and maxed at) (.+) for the '(.+)' Rank Research$/, "“$3”等阶研究等级提升至 $2"],
+        [/^Level increased (to|and maxed at) (.+) for the '(.+)' (.+) Research$/, "等级提升至 $2，来自“$3”$4 研究"],
+        [/^Level increased (to|and maxed at) (.+) for the '(.+)' (.+) Strangeness$/, "等级提升至 $2，来自“$3”$4 奇异升级"],
+        [/^Level increased (to|and maxed at) (.+) for the '(.+)' automatization Research$/, "自动研究“$3”等级提升至 $2"],
+        [/^Level increased (to|and maxed at) (.+) for the '(.+)' Inflation$/, "膨胀“$3”等级提升至 $2"],
+        [/^Increased Rank to '(.+)'$/, "等阶提升至“$1”"],
+        [/^New Element '(.+)' obtained$/, "已获得新元素“$1”"],
+        [/^New Element '(.+)' awaiting activation$/, "新元素“$1”等待激活"],
+        [/^New Upgrade '(.+)', has been created$/, "新升级“$1”已创建"],
+        [/^New Void reward unlocked: (.+)$/, "新虚空奖励已解锁：$1"],
+        [/^New Supervoid reward unlocked: (.+)$/, "新超虚空奖励已解锁：$1"],
+        [/^New Vacuum stability completion(.+)$/, "新的真空稳定完成 $1"],
+        [/^More recent version \((.+)\) is available$/, "有更新的版本（$1）可用"],
+        [/^Current active Stage is (.+)$/, "当前活跃阶段是 $1"],
+        [/^current active Stage isn't Microworld$/, "当前活跃阶段不是微观世界"],
+        [/^current active Stage isn't Submerged$/, "当前活跃阶段不是湮没"],
+        [/^current active Stage isn't Accretion$/, "当前活跃阶段不是吸积"],
+        [/^current active Stage isn't Interstellar$/, "当前活跃阶段不是星际"],
+        [/^current active Stage isn't Intergalactic$/, "当前活跃阶段不是星系际"],
+        [/^current active Stage isn't Abyss$/, "当前活跃阶段不是深渊"],
+        [/^current active Stage isn't Void$/, "当前活跃阶段不是虚空"],
+        [/^current active Stage isn't (.+)$/, "当前活跃阶段不是$1"],
+        [/^Can't be toggled while inside (.+)$/, "在$1内无法切换"],
+        [/^Failed to re-enter the (.+)$/, "重新进入$1失败"],
+        [/^Enter the (.+)\? \(Currently inside (.+)\)$/, "进入$1？（当前位于$2内）"],
+        [/^Exit the (.+)\?$/, "退出$1？"],
+        [/^(.+) auto Quasiparticles$/, "$1 自动准粒子"],
+        [/^(.+) auto Virtual particles$/, "$1 自动虚粒子"],
+        [/^(.+) Quantum foam$/, "$1 量子泡沫"],
+        [/^(.+)x Quantum foam gain$/, "$1 倍量子泡沫获取"],
+        [/^(.+)x Quasiparticles gain$/, "$1 倍准粒子获取"],
+        [/^(.+)x Virtual particles gain$/, "$1 倍虚粒子获取"],
+        [/^(.+) energy gain$/, "$1 能量获取"],
+        [/^Delay Cosmic dust hardcap by (.+) per level\.$/, "每级将宇宙尘埃硬上限延迟 $1。"],
+        [/^Increase strength of Cosmic dust by (.+)\.$/, "宇宙尘埃强度提高 $1。"],
+        [/^Cost scaling will be \-(.+) smaller with every level\.$/, "每级成本缩放降低 $1。"],
+        [/^Reach (.+) Clouds with starting Rank$/, "以起始等阶达到 $1 个云"],
+        [/^Reach (.+) Clouds with starting Solar mass$/, "以起始太阳质量达到 $1 个云"],
+        [/^Reach (.+) Discharge goals\.$/, "达到 $1 个放能目标。"],
+        [/^Have more than (.+) Clouds$/, "拥有超过 $1 个云"],
+        [/^Produce at least (.+) (.+) this reset\.$/, "本次重置至少生产 $1 个 $2。"],
+        [/^Complete with (.+) self-made Universes$/, "以 $1 个自建宇宙完成"],
+        [/^Create (.+) self-made \(spoiler\) in current reset\.$/, "在当前重置中创建 $1 个自建（剧透）"],
+        [/^Obtain \+(.+) bonus Discharge goals\.$/, "获得 +$1 个额外放能目标。"],
+        [/^Exports max timer and max reward increased by (.+)$/, "导出最大计时器和最大奖励增加 $1"],
+        [/^Requires '(.+)' Strangeness\.$/, "需要“$1”奇异升级。"],
+        [/^Make auto for (.+) Intergalactic Structures permanent$/, "使 $1 个星系际结构的自动化永久化"],
+        [/^Make Intergalactic Stage immune to Collapse reset$/, "使星系际阶段免疫坍缩重置"],
+        [/^Make Galaxies (.+) times cheaper, based on current Merge score \/ (.+) \+ 1\.$/, "使星系便宜 $1 倍，基于当前合并分数 / $2 + 1。"],
+        [/^Make '(.+)' Inflation immune to resets$/, "使“$1”膨胀免疫重置"],
+        [/^Only numbers can be used here$/, "此处只能使用数字"],
+        [/^Selected slot \((.+)\) is not a number from 0 to 9$/, "选择的槽位（$1）不是 0 到 9 的数字"],
+        [/^Property '(.+)' cannot be added to a non object$/, "属性“$1”无法添加到非对象上"],
+        [/^Selected property isn't primitive$/, "所选属性不是基本类型"],
+        [/^Event (.+) doesn't exist$/, "事件 $1 不存在"],
+        [/^Accept and use (.+) worth of Offline time\? \(Includes time spent to click any of the buttons\)$/, "接受并使用价值 $1 的离线时间？（包含点击按钮所花的时间）"],
+        [/^Puddles will produce (.+) times more $/, "水坑会生产 $1 倍的"],
+        [/^Puddles will produce (.+) times more Drops\.$/, "水坑的水滴产量提升 $1 倍。"]
+    ];
+    var _known = {};
+    cnRegReplace.forEach(function (v, k) { _known[k.source] = 1; });
+    for (var _i = 0; _i < extraRegex.length; _i++) {
+        if (!_known[extraRegex[_i][0].source]) cnRegReplace.set(extraRegex[_i][0], extraRegex[_i][1]);
+    }
+})();
+/* ---- 名称自动补齐（沿用原词条中带句号的译文） ---- */
+(function () {
+    var _a = {
+        "Hypercompact stellar system": "超紧凑恒星系统",
+        "Intense weathering": "强烈风化"
+    };
+    for (var k in _a) if (!Object.prototype.hasOwnProperty.call(cnItems, k)) cnItems[k] = _a[k];
+})();
+/* ---- 第二批：悬停说明 / 提示 ---- */
+(function () {
+    var _b = {
+        "- New content (End) - Mobile shorcuts are now available outside of related support - Ability to change number hotkeys and use numbers for other hotkeys - Create all Upgrades button - Improved hover text - Added hotkeys for toggling autos": "- 新内容（终结） - 移动端快捷键现在可在相关支持之外使用 - 可更改数字热键并将数字用于其他热键 - 新增“创建全部升级”按钮 - 改进悬停文本 - 新增切换自动的热键",
+        "‒ Global speed is set to 0 ‒ Stage resets are disabled ‒ All Stages are removed from reset cycle": "‒ 全局速度设为 0 ‒ 阶段重置被禁用 ‒ 所有阶段从重置循环中移除",
+        "‒ Time limit is always active (WIP) ‒ Time limit is based on Universe age (WIP) More nerfs will be shown after running out of time (WIP)": "‒ 时间限制始终生效（开发中） ‒ 时间限制基于宇宙年龄（开发中） 时间耗尽后会显示更多削弱（开发中）",
+        ", 'Self-gravity' (Accretion Upgrade), 'Ablative armor' (Rank Research)": "、“自引力”（吸积升级）、“烧蚀装甲”（等阶研究）",
+        "'All' confirmation is enabled": "“全部”确认已开启",
+        "'Better rewards' (Inflaton)": "“更好的奖励”（膨胀点）",
+        "'Cheaper Ranks' (Accretion, WIP)": "“更便宜的等阶”（吸积，开发中）",
+        "'Collapse improvement' (Cosmon)": "“坍缩改进”（宇宙子）",
+        "'Conservation of resources' (Cosmon)": "“资源守恒”（宇宙子）",
+        "'Discharge improvement' (Cosmon)": "“放能改进”（宇宙子）",
+        "'Energy world' (Microworld, WIP)": "“能量世界”（微观世界，开发中）",
+        "'Improved Offline' (Inflaton)": "“改进的离线”（膨胀点）",
+        "'Improved Offline' has to be at least level 1": "“改进的离线”至少需要 1 级",
+        "'Inflationary boost' (Tachyon, WIP)": "“膨胀增益”（快子，开发中）",
+        "'More Cosmons' (Cosmon)": "“更多宇宙子”（宇宙子）",
+        "'More Milestones' (Abyss, WIP)": "“更多里程碑”（深渊，开发中）",
+        "'More Strangelets' (Cosmon)": "“更多奇异粒子”（宇宙子）",
+        "'Nerf dispel' (Milestone, WIP)": "“削弱驱散”（里程碑，开发中）",
+        "'Nuclear fission' (Microworld Upgrade), 'Radioactive decay' (Energy Research)": "“核裂变”（微观世界升级）、“放射性衰变”（能量研究）",
+        "'Rank improvement' (Cosmon)": "“等阶改进”（宇宙子）",
+        "'Stranger gain' (Inflaton)": "“奇异粒子获取”（膨胀点）",
+        "'Vaporization improvement' (Cosmon)": "“汽化改进”（宇宙子）",
+        "'Work in progress' (Milestone, WIP)'": "“开发中”（里程碑，开发中）",
+        "(Can be viewed again with 'Events' button in Settings tab)": "（可在设置标签的“事件”按钮中再次查看）",
+        "+1 to the first 3 Quantum Upgrades max levels": "前 3 个量子升级的最大等级 +1",
+        "+1 to the first 3 Virtual Upgrades max levels": "前 3 个虚粒子升级的最大等级 +1",
+        "A more stable, but still the false Vacuum state (Entering will force a Vacuum reset, will be reverted after exiting)": "更稳定、但仍属假真空的状态（进入会强制真空重置，退出后恢复）",
+        "Add 1 more Milestone for every Stage, new tiers award Strangelets instead and have 0 seconds time limit.": "为每个阶段增加 1 个里程碑，新层级改为奖励奇异粒子，且时间限制为 0 秒。",
+        "Add bonus Milestone tiers from +8 to +1 per level based on order starting from first Microworld Milestone to last Intergalactic Milestone.": "按从第一个微观世界里程碑到最后一个星系际里程碑的顺序，每级增加 +8 到 +1 的额外里程碑层级。",
+        "After so many Universe resets, false Vacuum had became at the same time more and less stable, this had unlocked a new Challenge ‒ 'Vacuum stability'. (Also improved 'Strange gain' Inflation)": "在如此多次宇宙重置后，假真空同时变得更稳定也更不稳定，这解锁了新挑战 ‒ “真空稳定性”。（同时改进了“奇异获取”膨胀）",
+        "already gaining Clouds without needing to reset": "已经可以在无需重置的情况下获得云",
+        "As Galaxies began to Merge, their combined Gravity started forming an even bigger Structure ‒ 'Universe'. Will need to maximize Galaxies before every Merge to get enough Score to create it. (Merge reset can only be done a limited amount of times per Stage reset)": "随着星系开始合并，它们共同的引力开始形成更大的结构 ‒ “宇宙”。每次合并前都需要最大化星系才能获得足够分数来创建它。（每次阶段重置中合并重置只能进行有限次数）",
+        "As Neutron stars spin down, some of them may get converted into Quark stars. This will add a new effect to Neutron stars ‒ Interstellar Stars are cheaper, and will also increase max level of 'Star system' by +1.": "当中子星自转变慢时，其中一些可能会转变为夸克星。这将为中子星增加新效果 ‒ 星际星球更便宜，并且还会使“星球系统”的最大等级 +1。",
+        "Automatically Collapse if able to afford a new Galaxy and auto Galaxy is enabled. (Also unlocks permanent auto Galaxies and removes Solar mass limit for auto Collapse points)": "若能负担新星系且已启用自动星系，则自动坍缩。（同时解锁永久自动星系，并移除自动坍缩点的太阳质量限制）",
+        "Available options: 'Reset' ‒ reset global settings 'Copy' ‒ copy global settings to the clipboard Or insert global settings text here to load it": "可用选项：“重置” ‒ 重置全局设置 “复制” ‒ 将全局设置复制到剪贴板 或在此粘贴全局设置文本以载入",
+        "Bodies will become massive enough to affect each other with their own gravity. (Unlock a new Structure and get 3x boost to Planetesimals)": "天体的质量将大到能以自己的引力相互影响。（解锁新结构，并使微行星获得 3 倍增益）",
+        "boost from doing it is below 2x": "这样做的增益低于 2 倍",
+        "can Collapse Vacuum into its true state": "可以将真空坍缩为真状态",
+        "can do Big Crunch by creating Multiverse instead": "可以通过创建多元宇宙来代替大挤压",
+        "Changing this setting will reload the page, confirm? (Game will not autosave)": "更改此设置会重新加载页面，确认？（游戏不会自动保存）",
+        "Click the underlined 'Void' button in the 'Advanced' subtab to toggle the 'Supervoid'": "点击“高级”子标签中带下划线的“虚空”按钮以切换“超级虚空”",
+        "Convert 1 unsafe Merge reset into safe. If there is no unsafe resets to convert, before this Inflation, then adds one.": "将 1 次不安全的合并重置转为安全。如果此前没有可转换的不安全重置，则增加 1 次。",
+        "Decayed Vacuum": "衰变真空",
+        "Delay 'Global boost' Inflation softcap by (1 + level) ^2. Also increase max level of 'Acceleration' by +2.": "将“全局增益”膨胀的软上限延迟 (1 + 等级) ^2。同时使“加速”的最大等级 +2。",
+        "Elements will no longer require Collapse for activation. Second level will unlock auto creation of Elements.": "元素激活不再需要坍缩。第二级将解锁元素的自动创建。",
+        "First Intergalactic Structure. (Nebula) (Half of the requirement to over-extend 'Remnants of past' time limit)": "第一个星系际结构。（星云）（可将“过往残骸”时间限制超出需求的一半）",
+        "First two Accretion Milestones no longer reset": "前两个吸积里程碑不再重置",
+        "First two Intergalactic Milestones no longer reset": "前两个星系际里程碑不再重置",
+        "First two Interstellar Milestones no longer reset": "前两个星际里程碑不再重置",
+        "First two Microworld Milestones no longer reset": "前两个微观世界里程碑不再重置",
+        "First two Submerged Milestones no longer reset": "前两个湮没里程碑不再重置",
+        "Format for save file edit [property 'value' reloadSave?], example to create first Microworld Upgrade [upgrades.1.0 1] Properties are always separated by dots, final one must be primitive Value has to be of correct primitive type, there is no safety Any value for save reload that isn't 'false' interpreted as 'true' Everything is case sensitive, no brackets": "存档编辑格式 [属性 '值' 是否重载存档?]，例如创建第一个微观世界升级 [upgrades.1.0 1] 属性始终用点分隔，最后一项必须是基本类型 值必须是正确的基本类型，没有任何保护措施 存档重载的值只要不是 'false' 都会被视为 'true' 全部区分大小写，不要加括号",
+        "Found the proof that you were looking for!": "找到了你一直在寻找的证据！",
+        "Gain extra 1 + Multiverses extra Inflatons per level.": "每级额外获得 1 + 多元宇宙数量的膨胀点。",
+        "Game speed was increased by 1x": "游戏速度提高了 1 倍",
+        "Global settings version doesn't match": "全局设置版本不匹配",
+        "Gravitational potential": "引力势",
+        "Improve level 2 of 'Overboost' Inflation (Remove boost decay and make it always work in false Vacuum)": "改进“超增压”膨胀的第 2 级（移除增益衰减，并使其在假真空中始终生效）",
+        "Increase max level for 'Overboost', 'Strange gain' and 'Better rewards' by +1'.": "使“超增压”、“奇异获取”和“更好的奖励”的最大等级 +1。",
+        "Increase max levels for a lot of Strangeness, these include: 'Fundamental boost', 'Better improvement', 'Free Discharge', 'More Moles', 'Bigger Puddles', 'Improved flow', 'Faster Accretion', 'Intense weathering', 'Hotter Stars', 'Cheaper Stars' and 'Bigger Structures'.": "提高大量奇异升级的最大等级，包括：“基本原理增益”、“更好的改进”、“免费放能”、“更多摩尔”、“更大的水坑”、“改进的流动”、“更快的吸积”、“强烈风化”、“更热的星球”、“更便宜的星球”和“更大的结构”。",
+        "It's recommended to export save file first Press 'Confirm' to confirm and delete your save file": "建议先导出存档文件 按“确认”以确认并删除你的存档文件",
+        "Merge type to return back into false Vacuum state": "合并类型：返回假真空状态",
+        "Mesons will be able to bind Particles to form Atoms, which will make Atoms to be affected by 'Strong force'. (Atoms will be 16 times cheaper)": "介子将能把粒子结合成原子，使原子受到“强力”影响。（原子便宜 16 倍）",
+        "Meta isn't allowed": "不允许使用 Meta",
+        "Must have been a bad dream": "一定是做了个噩梦",
+        "Now that current Universe is finished, it's time to Inflate a new one and so to unlock the Inflation tab. (Universes only use specialized hotkeys. Also 'Nucleosynthesis' now unlocks more Elements based on self-made Universes)": "当前宇宙已经完成，是时候膨胀一个新的宇宙，从而解锁膨胀标签。（宇宙只使用专用热键。另外“核合成”现在会根据自建宇宙数量解锁更多元素）",
+        "Press 'Confirm' to load input as a new global settings, this will reload the page (Input is too long to be displayed)": "按“确认”将输入载入为新的全局设置，此操作会重新加载页面（输入过长，无法显示）",
+        "Press 'Confirm' to load input as a save file (Input is too long to be displayed)": "按“确认”将输入载入为存档文件（输入过长，无法显示）",
+        "Produce even more Stardust with +1 extra max level of 'Star system'.": "通过“星球系统”额外 +1 最大等级来生产更多星尘。",
+        "Produce even more Stars and increase strength of 'Starburst region', 'Globular cluster' and 'Starburst Galaxy' effects by 10 per level.": "生产更多星球，并使“星暴区”、“球状星团”和“星暴星系”的效果每级提高 10。",
+        "Quantum foam:": "量子泡沫：",
+        "Quark stars (Neutron stars)": "夸克星（中子星）",
+        "Quasiparticles boost Foam gain": "准粒子增益泡沫获取",
+        "Quasiparticles boost is now multiplicative": "准粒子增益现在为乘算",
+        "Requires 'Void Milestones'": "需要“虚空里程碑”",
+        "Resources only shown when unlocked, order is kept": "资源仅在解锁后显示，顺序保持不变",
+        "Score synergy": "分数协同",
+        "Second Intergalactic Structure. (Star cluster) (Half of the requirement to over-extend 'Remnants of past' time limit)": "第二个星系际结构。（星团）（可将“过往残骸”时间限制超出需求的一半）",
+        "secret achievement": "隐藏成就",
+        "secret proof": "隐藏证据",
+        "secret secret": "隐藏秘密",
+        "Setting selected loadout as default": "将所选预设设为默认",
+        "Spreads water too fast. 1 extra Sea per Ocean. It will also improve Oceans effect scaling.": "水的扩散太快了。每个海洋额外产生 1 个大海，同时改进海洋的效果缩放。",
+        "Stabilize false Vacuum, which in turn will unlock new Strangeness and add new effect into 'Void Milestones' Inflation: Merging without changing Vacuum state, creation of false Universes and more. For true Vacuum this will allow creation of Quasi-stars inside Void, they will not produce anything and will scale in cost 10 times faster.": "稳定假真空，从而解锁新的奇异升级并为“虚空里程碑”膨胀增加新效果：在不改变真空状态的情况下合并、创建假宇宙等。对真真空而言，这将允许在虚空内创建准星，它们不生产任何东西，且成本缩放快 10 倍。",
+        "Stage reset canceled, requirements are no longer met": "阶段重置已取消，需求不再满足",
+        "Stars remnants": "星球残骸",
+        "Start true Vacuum with Void equal to Supervoid": "以虚空等于超级虚空的真真空开始",
+        "Start Universe resets or above with true Vacuum": "以真真空开始宇宙重置或更高层级",
+        "still capable to do more Merge resets": "仍能进行更多合并重置",
+        "Strength of the 'Instability' increased": "“不稳定性”的强度已提高",
+        "Supervoid only": "仅限超级虚空",
+        "Text has been successfully copied to the clipboard": "文本已成功复制到剪贴板",
+        "There are no unlocked events": "没有已解锁的事件",
+        "This save file is not from this game or too old": "此存档文件不是本游戏的，或版本过旧",
+        "Time left": "剩余时间",
+        "together, there are no direct rewards": "一起，没有直接奖励",
+        "Toggle Quasi-automatization": "切换准粒子自动化",
+        "Toggle Virtual automatization": "切换虚粒子自动化",
+        "Too many Universes": "宇宙过多",
+        "Touch events require mobile device support enabled in settings": "触控事件需要在设置中启用移动设备支持",
+        "Toxic enough to make Red giants effect improve Red supergiants.": "毒性足以让红巨星效果改进红超巨星。",
+        "True Vacuum only, reclaim up to 25% of Remnants once (doesn't affect Milestones). Second level will increase max level of 'Galactic tide' Strangeness, but only provides passive effect until level 3. Third level also increases max level of 'Main giants' by +2, improves effect and makes it affect Neutron stars. Final level will increase max level of 'Automatic Collapse' Strangeness.": "仅限真真空，可回收最多 25% 的残骸一次（不影响里程碑）。第二级将提高“星系潮汐”奇异升级的最大等级，但在第 3 级前只提供被动效果。第三级还会使“主序巨星”的最大等级 +2，改进效果并使其影响中子星。最后一级将提高“自动坍缩”奇异升级的最大等级。",
+        "Unlock another Strange Structure. (Click on that Structure to see its effects)": "解锁另一个奇异结构。（点击该结构查看其效果）",
+        "Unlocked a new Verse ‒ 'Multiverse' and also another row of Inflations ‒ Tachyon. Creating Multiverse forces Big Crunch, but keeps bonus Universes. (Multiverses are not immune to End resets and do not produce anything inside Challenges)": "解锁了新的宇宙类型 ‒ “多元宇宙”，以及另一行膨胀 ‒ 快子。创建多元宇宙会强制大挤压，但保留额外宇宙。（多元宇宙不免疫终结重置，且在挑战中不生产任何东西）",
+        "Unlocked ability to End current Universes through basic End reset ‒ 'Big Crunch', also unlocked harder version of Void ‒ 'Supervoid' which is immune to End resets. (Base for End resets reward is increased by +1 while inside true Vacuum)": "解锁了通过基础终结重置 ‒ “大挤压”来终结当前宇宙的能力，同时解锁了虚空的更难版本 ‒ “超级虚空”，它免疫终结重置。（在真真空内终结重置的奖励基础 +1）",
+        "Vacuum reset has been forced": "已强制进行真空重置",
+        "Vacuum state with the lowest possible Energy (Entering will force a Quantum reset, will be reverted after exiting)": "能量最低的真空状态（进入会强制量子重置，退出后恢复）",
+        "Versions menu": "版本菜单",
+        "Virtual accumulation": "虚粒子累积",
+        "Virtual automatization": "虚粒子自动化",
+        "Virtual Black hole": "虚黑洞",
+        "Virtual decrease": "虚粒子减少",
+        "Virtual gain": "虚粒子获取",
+        "Virtual improvement": "虚粒子改进",
+        "Virtual maximum": "虚粒子上限",
+        "Virtual minimum": "虚粒子下限",
+        "Virtual particles boost is now multiplicative": "虚粒子增益现在为乘算",
+        "Virtual particles:": "虚粒子：",
+        "Virtual quantum": "虚量子",
+        "Void type": "虚空类型",
+        "Which event do you want to see again? Event 1: Stage reset": "你想再次查看哪个事件？事件 1：阶段重置",
+        "Which reset tier to simulate, no rewards: 'Stage', 'Vacuum' (resets Universe age), 'Universe' (removes true Vacuum Inflaton), 'Multiverse' Due to bug related reasons must be done outside of Challenges": "要模拟哪个重置层级（无奖励）：“阶段”、“真空”（重置宇宙年龄）、“宇宙”（移除真真空膨胀点）、“多元宇宙” 由于与 bug 相关的原因，必须在挑战外进行",
+        "Which reset tier Upgrades to refund: (Free Upgrades are not re-rewarded, doesn't adjust any extra values, forces save file reload) 'Strange quarks', 'Cosmons'": "要退还哪个重置层级的升级：（免费升级不会重新给予，不会调整任何额外数值，会强制重新加载存档文件）“奇异夸克”、“宇宙子”",
+        "With Vacuum decaying, the remaining matter had rearranged itself, which had lead to the formation of the very first Challenge ‒ 'Void'. Check it out in the Advanced subtab. (There is no reason to stay inside Challenges past time limit)": "随着真空衰变，剩余物质重新排列，导致了第一个挑战 ‒ “虚空”的形成。请在高级子标签中查看。（超过时间限制后留在挑战中没有任何意义）",
+        "Wrong value format": "数值格式错误"
+    };
+    for (var k in _b) if (!Object.prototype.hasOwnProperty.call(cnItems, k)) cnItems[k] = _b[k];
+    var _r = [
+        [/^Alert has been replaced with higher priority one Old text: (.+)$/, "已有更高优先级的弹窗，以下文本被替换：$1"],
+        [/^Another Alert is already active Missed text: (.+)$/, "已有弹窗处于激活状态，遗漏的文本：$1"],
+        [/^Input '(.+)' doesn't match anything$/, "输入“$1”没有匹配任何内容"],
+        [/^, Stage(.+) Researches$/, "、阶段$1 项研究"],
+        [/^can afford a Galaxy after Collapse$/, "坍缩后可以负担一个星系"],
+        [/^can afford a Galaxy$/, "可以负担一个星系"],
+        [/^(.+) after (.+) more completions\.$/, "再完成 $2 次后 $1。"],
+        [/^(.+) is removed from the reset cycle\.$/, "$1 已从重置循环中移除。"],
+        [/^Atoms will produce (.+) times more Particles\.$/, "原子将生产 $1 倍的粒子。"],
+        [/^All self-made Stars will boost each other by (.+)\. \(Total boost: (.+) ⟶ (.+)\)$/, "所有自建星球将互相提升 $1。（总增益：$2 ⟶ $3）"],
+        [/^\+(.+)x to the Foam gain per any Upgrade level$/, "每级升级使泡沫获取 +$1 倍"],
+        [/^\+(.+)x to the Particles gain per any Upgrade level$/, "每级升级使粒子获取 +$1 倍"],
+        [/^\+(.+)x Cheaper Particles per any Upgrade level$/, "每级升级使粒子便宜 +$1 倍"],
+        [/^'(.+)' base will be \+(.+) stronger\. \(This is equal to (.+)x boost improvement\)$/, "“$1”的基础增强 +$2。（等同于 $3 倍增益改进）"],
+        [/^A new color and a rare bonus of \^(.+) to the Solar mass effect\.$/, "一种新颜色，并为太阳质量效果带来 ^$1 的稀有加成。"],
+        [/^An oxidizing agent that will make Interstellar Stars cost scale even slower\. \(-(.+) less\)$/, "一种氧化剂，使星际星球的成本缩放更慢。（减少 $1）"],
+        [/^Increase strength of Cosmic dust by another (.+) per level\. Max level is based on Rank\. \(Total increase: (.+)\)$/, "每级使宇宙尘埃强度再提高 $1。最大等级取决于等阶。（总提升：$2）"],
+        [/^Delay (.+) softcap by current (.+) energy \^\(level \/ 5\)\. \(Current delay: (.+) ⟶ (.+)\)$/, "以当前 $2 能量 ^(等级 / 5) 延迟 $1 的软上限。（当前延迟：$3 ⟶ $4）"],
+        [/^(.+) Strange quarks will boost Accretion by reducing cost of its Structures(.+)\. \(Formula: Strange quarks \^(.+) \| Effect: (.+)\)(.+)$/, "$1 奇异夸克将通过降低其结构成本来增益吸积$2。（公式：奇异夸克 ^$3 | 效果：$4）$5"],
+        [/^(.+) Strange quarks will boost Intergalactic by increasing Solar mass gain(.+)\. \(Formula: Strange quarks \^(.+) \| Effect: (.+)\)(.+)$/, "$1 奇异夸克将通过提高太阳质量获取来增益星系际$2。（公式：奇异夸克 ^$3 | 效果：$4）$5"],
+        [/^(.+) Strange quarks will boost Interstellar by improving its Structures(.+)\. \(Formula: Strange quarks \^(.+) ⟶ \^(.+) with '\[26\] Iron' \| Effect: (.+)\)(.+)$/, "$1 奇异夸克将通过改进其结构来增益星际$2。（公式：奇异夸克 ^$3 ⟶ ^$4，拥有 [26]铁 时 | 效果：$5）$6"],
+        [/^(.+) Strange quarks will boost Microworld by improving its Structures(.+)\. \(Formula: Strange quarks \^(.+) \| Effect: (.+)\)(.+)$/, "$1 奇异夸克将通过改进其结构来增益微观世界$2。（公式：奇异夸克 ^$3 | 效果：$4）$5"],
+        [/^(.+) Strange quarks will boost Submerged by improving Puddles(.+)\. \(Formula: Strange quarks \^(.+) \| Effect: (.+)\)(.+)$/, "$1 奇异夸克将通过改进水坑来增益湮没$2。（公式：奇异夸克 ^$3 | 效果：$4）$5"],
+        [/^‒ (.+) is not immune to Stage resets ‒ Requires special automatizations \(Needs to be enabled in Settings\) ‒ In true Vacuum boosts Universes by (.+) \(Merge score \/ (.+) \+ 1\) ‒ In false Vacuum makes Abyss immune to non-Abyss Stage resets ‒ Inside Void cost for everything is increased by 10 and weaken some Upgrades$/, "‒ $1 不免疫阶段重置 ‒ 需要特殊自动化（需在设置中启用） ‒ 在真真空中按 $2（合并分数 / $3 + 1）提升宇宙 ‒ 在假真空中使深渊免疫非深渊的阶段重置 ‒ 在虚空内所有成本提高 10，并削弱部分升级"],
+        [/^‒ Galaxies scale in cost faster by \+(.+) ‒ Intergalactic Upgrade 'Galactic Merger' cost (.+) times more ‒ Merge requirement is set to (.+)(.+)$/, "‒ 星系的成本缩放加快 +$1 ‒ 星系际升级“星系合并”成本提高 $2 倍 ‒ 合并需求设为 $3$4"],
+        [/^‒ Global speed is decreased by (.+) ‒ Milestones time limit is 0 seconds ‒ Permanent Stages are removed from reset cycle ‒ Some nerfs get harsher after every Completion$/, "‒ 全局速度降低 $1 ‒ 里程碑时间限制为 0 秒 ‒ 永久阶段从重置循环中移除 ‒ 每次完成后部分削弱会更严厉"],
+        [/^‒ Having (.+) (.+) energy in true Vacuum will replace Big Crunch with Big Rip ‒ Current Big Rip reward is at (.+) Cosmons$/, "‒ 在真真空中拥有 $1 $2 能量会将大挤压替换为大撕裂 ‒ 当前大撕裂奖励为 $3 宇宙子"],
+        [/^‒ Strange quarks from Stage resets are decreased by (.+) ‒ Strange quarks from non-Interstellar Stage resets are further decreased by (.+) ‒ Stage resets above (.+) decrease Strange quarks from the Stage resets by 2 ‒ Going above 10 minutes of the Stage time will force Stage reset ‒ If can't reset after 10 minutes then Vacuum reset is forced instead(.+) ‒ Passive Strange quarks gain is disabled$/, "‒ 阶段重置获得的奇异夸克减少 $1 ‒ 非星际阶段重置获得的奇异夸克进一步减少 $2 ‒ 超过 $3 的阶段重置会使阶段重置获得的奇异夸克减少 2 ‒ 阶段时间超过 10 分钟将强制阶段重置 ‒ 若 10 分钟后仍无法重置，则强制真空重置$4 ‒ 被动奇异夸克获取被禁用"],
+        [/^‒ Microworld Structures are 4 times weaker(.+)$/, "‒ 微观世界结构强度降低为 1/4$1"],
+        [/^‒ Interstellar Stars are (.+) times weaker(.+)$/, "‒ 星际星球强度降低为 1/$1$2"],
+        [/^‒ Cosmic dust is softcapped \(\^(.+)\)(.+)$/, "‒ 宇宙尘埃受软上限限制（^$1）$2"],
+        [/^(.+) Completions, can be increased by Merging Galaxies while inside Also gain a single Inflaton after 1 more completion$/, "$1 次完成，可在进入期间通过合并星系提升 再完成 1 次后额外获得 1 个膨胀点"],
+        [/^All rewards are located in the '(.+)' Tab Also gain (.+) rewards$/, "所有奖励都在“$1”标签中 还会获得 $2 项奖励"],
+        [/^Always automatically create all (.+) from any Stage(.+)\. \(Needs to be enabled in Settings, unlocked automatization: (.+)\)$/, "总是自动创建任何阶段的所有$1$2。（需在设置中启用，已解锁的自动化：$3）"],
+        [/^Any further fusion will be an endothermic process, but will still (.+)\. (.+)$/, "进一步聚变将是吸热过程，但仍会 $1。$2"],
+        [/^After reaching equilibrium, self-made Protoplanets will boost each other by (.+)\.$/, "达到平衡后，自建原行星将互相提升 $1。"],
+        [/^Accretion Structures that produce other Accretion Structures will do it (.+) times faster\. \(Affected Structures are Planetesimals and Protoplanets\)$/, "生产其他吸积结构的吸积结构将快 $1 倍。（受影响的结构为微行星和原行星）"],
+        [/^Cloud density is too high\.\.\. Any new Clouds past (.+) will be weaker due to the softcap\.$/, "云密度过高……由于软上限，超过 $1 的新云会更弱。"],
+        [/^current (.+) is 0, which could make next Rank slow$/, "当前 $1 为 0，这会使下一个等阶变慢"],
+        [/^current (.+) is 0, which could make recovering from Collapse really slow$/, "当前 $1 为 0，这会使从坍缩中恢复非常慢"],
+        [/^Create new Atomic nuclei with Neutron capture \(s-process and r-process\)\. Unlocks (.+) more Element(.+) \(\+1 for every (.+)\)\.$/, "通过中子俘获（s 过程和 r 过程）创造新的原子核。解锁 $1 个元素$2（每个 $3 增加 +1）。"],
+        [/^Decrease amount of Drops required to get a Cloud by (.+)\.$/, "获得一个云所需的水滴减少 $1。"],
+        [/^Decrease amount of Galaxies required for the creation of a Galaxy Group\. \(Effect: (.+) ⟶ (.+)\)$/, "创建星系群所需的星系减少。（效果：$1 ⟶ $2）"],
+        [/^Boost Strange quarks gain from the Stage resets again by (.+)\.$/, "阶段重置获得的奇异夸克再次提高 $1。"],
+        [/^Gain (.+) times more Strange quarks from Stage resets\.$/, "从阶段重置中获得 $1 倍的奇异夸克。"],
+        [/^Cosmic dust particles will cling to each other\. \(\+(.+) to 'Brownian motion'\)$/, "宇宙尘埃颗粒会相互吸附。（“布朗运动” +$1）"],
+        [/^Offline calculation started$/, "离线计算已开始"],
+        [/^Offline calculation ended$/, "离线计算已结束"]
+    ];
+    var _known = {};
+    cnRegReplace.forEach(function (v, k) { _known[k.source] = 1; });
+    for (var i = 0; i < _r.length; i++) if (!_known[_r[i][0].source]) cnRegReplace.set(_r[i][0], _r[i][1]);
+})();
+/* ---- 第三批：自动化与设置说明 ---- */
+(function () {
+    var _c = {
+        "Arrow Down": "下箭头",
+        "Arrow Left": "左箭头",
+        "Arrow Right": "右箭头",
+        "Arrow Up": "上箭头",
+        "Shift Arrow Left": "Shift + 左箭头",
+        "Shift Arrow Right": "Shift + 右箭头",
+        "Shift Numbers": "Shift + 数字"
+    };
+    for (var k in _c) if (!Object.prototype.hasOwnProperty.call(cnItems, k)) cnItems[k] = _c[k];
+    var _r = [
+        [/^Automatically Collapse once reached enough boost or Solar mass\. \(Needs to be enabled in Settings\)(.+)$/, "自动坍缩：达到足够增益或太阳质量时。（需在设置中启用）$1"],
+        [/^Automatically Discharge upon reaching next Goal or spending Energy\. \(Needs to be enabled in Settings\)(.+)$/, "自动放能：达到下一个目标或花费能量时。（需在设置中启用）$1"],
+        [/^Automatically increase Rank when possible\. \(Needs to be enabled in Settings\)(.+)$/, "自动提升等阶：条件满足时。（需在设置中启用）$1"],
+        [/^Automatically Vaporize when reached enough boost from new Clouds\. \(Needs to be enabled in Settings\)(.+)$/, "自动汽化：从新云获得足够增益时。（需在设置中启用）$1"],
+        [/^Automatically Merge Galaxies if can't get any more of them quickly(.+)\. \(Needs to be enabled in Settings\)(.+)$/, "自动合并星系：无法快速获得更多星系时$1。（需在设置中启用）$2"],
+        [/^Automatically create all (.+) from any Stage\. \(Unlocked automatization: (.+)\)$/, "自动创建任何阶段的所有$1。（已解锁的自动化：$2）"],
+        [/^Automatically make (.+) \(counts as self-made\) if cost is (?:X|[\d.,eE+\-]+) times of the available resource\. \(Current auto wait value is (.+), unlocked auto Structures: (.+)\)$/, "自动制造$1（计为自建），前提是成本为可用资源的 X 倍。（当前自动等待值：$2，已解锁自动结构：$3）"],
+        [/^can afford a Galaxy after Collapse(.+)$/, "坍缩后可以负担一个星系$1"],
+        [/^can afford a Galaxy(.+)$/, "可以负担一个星系$1"],
+        [/^Boost Microworld Structures by (.+)\.$/, "微观世界结构提升 $1。"],
+        [/^Boost global speed again by (.+)\.$/, "全局速度再次提升 $1。"],
+        [/^Boost global speed and Stage reset reward by (.+), strength is based on Supervoid progress(.+)\.(.+)$/, "全局速度与阶段重置奖励提升 $1，强度取决于超级虚空进度$2。$3"],
+        [/^Boost Preons and delay hardcap by current Energy \^(.+)\. \(Effect: (.+) ⟶ (.+)\)$/, "以当前能量 ^$1 提升前子并延迟硬上限。（效果：$2 ⟶ $3）"],
+        [/^Boost per Galaxy will be increased by \+(.+)\. \(Effect will be increased by \+(.+) for every new digit of Solar mass past (.+)\)$/, "每个星系的增益提高 +$1。（太阳质量每增加一位（超过 $3），效果再提高 +$2）"],
+        [/^Boost lower Stages based on current Galaxies and unlock new Upgrades for them\. \(Passive effects: (.+)\) \(New Upgrades: (.+)\)$/, "根据当前星系提升较低阶段，并为其解锁新升级。（被动效果：$1）（新升级：$2）"],
+        [/^Boost production of (.+) by 3 for the first (.+) levels and by 2 for the rest\. \(First time reaching levels 6, 10, 12 and 20 also unlocks something new\)$/, "前 $2 级使 $1 的产量提升 3，之后提升 2。（首次达到 6、10、12、20 级还会解锁新内容）"],
+        [/^Base for 'Improved Tritium' Research will be bigger by \+(.+)\. \(Boost from it at current Research level is (.+)\)$/, "“改进的氚”研究的基础提高 +$1。（当前研究等级带来的增益为 $2）"],
+        [/^Base for organics, it will increase the boost from Red giants by \^(.+)\.$/, "有机物的基础，将使红巨星的增益提高 ^$1。"],
+        [/^Big (.+) for (.+) Cosmons$/, "以 $2 宇宙子进行大 $1"],
+        [/^boost from doing it is below (.+)x$/, "这样做的增益低于 $1 倍"],
+        [/^Ability to regain spent Energy and if had enough Energy, it will also boost production of (.+) Structures by (.+)\.(.+)$/, "可收回已花费的能量；若能量足够，还会使 $1 个结构的产量提升 $2。$3"],
+        [/^A new substance for the Accretion, it will provide boost to Cosmic dust based on its quantity\. \(Formula: \(self-made \* current\) \^(.+) \| Boost: (.+)\)$/, "一种用于吸积的新物质，会根据其数量提升宇宙尘埃。（公式：(自建 * 当前) ^$1 | 增益：$2）"],
+        [/^An even bigger Galaxy to improve Stage reset reward and Galaxy groups effect with every Galaxy group\. Effective level is (.+), will be (.+) affect Stage reset reward\. \(Total boost: (.+) ⟶ (.+)\)$/, "更大的星系，每个星系群都会改进阶段重置奖励和星系群效果。有效等级为 $1，将影响阶段重置奖励 $2。（总增益：$3 ⟶ $4）"],
+        [/^An immensely energetic explosion that will boost Interstellar Stars by (.+)(.+)\. \(Effect will be stronger with more Black holes(.+)\)$/, "一场能量巨大的爆炸，使星际星球提升 $1$2。（黑洞$3越多效果越强）"],
+        [/^As fuel runs out, every Star will boost production in its own special way\. Solar mass (.+)will not decrease if to reset below current\. \(Hover over Remnants effects to see what they boost\)$/, "随着燃料耗尽，每颗星球都会以自己特有的方式提升产量。太阳质量$1即使重置到低于当前值也不会减少。（将鼠标移到残骸效果上可查看其增益）"],
+        [/^Allow for Star clusters to be boosted by \('Gravity' \/ (.+)\) \^(.+) \+ 1\. \(Boost is equal to (.+)\)$/, "使星团可以由（“引力” / $1）^$2 + 1 提升。（增益等于 $3）"],
+        [/^After matter were dispeled from Red giant, White dwarf was all that remained\. Improve effect of '\[6\] Carbon' by \+(.+) and increase max level of 'Star system' by \+1\.$/, "红巨星物质散尽后，只剩下了白矮星。使“[6] 碳”的效果提高 +$1，并使“星球系统”的最大等级 +1。"],
+        [/^Available options: 'Copy' ‒ copy save file to the clipboard 'Slot' ‒ change current save slot 'Delete' ‒ delete your save file 'Clear' ‒ clear all the domain data 'Global' ‒ open options for global settings 'Dev' ‒ open developer settings(.+) \(Can skip menus by adding spacebars\) Or insert save file text here to load it$/, "可用选项：“复制” ‒ 将存档复制到剪贴板 “槽位” ‒ 更改当前存档槽位 “删除” ‒ 删除你的存档 “清除” ‒ 清除所有域名数据 “全局” ‒ 打开全局设置选项 “开发者” ‒ 打开开发者设置$1 （可加空格跳过菜单） 或在此粘贴存档文本以载入"],
+        [/^Available options: \(shame on you if you are using it to cheat\)(.+) 'Console' ‒ console all relevant values 'Reset' ‒ simulate selected tier reset 'Refund' ‒ refund selected tier Upgrades 'Export' ‒ claim current export rewards$/, "可用选项：（如果你用它作弊，真丢人）$1 “控制台” ‒ 输出所有相关数值 “重置” ‒ 模拟所选层级重置 “退还” ‒ 退还所选层级的升级 “导出” ‒ 领取当前导出奖励"]
+    ];
+    var _known = {};
+    cnRegReplace.forEach(function (v, k) { _known[k.source] = 1; });
+    for (var i = 0; i < _r.length; i++) if (!_known[_r[i][0].source]) cnRegReplace.set(_r[i][0], _r[i][1]);
+})();
+/* ---- 第四批：结算 / 错误 / 剩余提示 ---- */
+(function () {
+    var _d = {
+        "Change Vacuum state to false": "将真空状态切换为假",
+        "Collapse canceled, requirements are no longer met": "坍缩已取消，需求不再满足",
+        "Developer mode is active": "开发者模式已启用",
+        "Developer mode is not active": "开发者模式未启用",
+        "Fundamental post error export": "Fundamental 导出错误",
+        "Max level increased for 'Automatic Galaxy' (WIP)": "“自动星系”的最大等级提升（开发中）",
+        "Shift Tab ‒": "Shift + Tab ‒",
+        "Vaporization canceled, requirements are no longer met": "汽化已取消，需求不再满足"
+    };
+    for (var k in _d) if (!Object.prototype.hasOwnProperty.call(cnItems, k)) cnItems[k] = _d[k];
+    var _r = [
+        [/^Error encountered, ID ‒ '(.+)' doesn't exist$/, "出现错误，ID ‒ “$1”不存在"],
+        [/^Error encountered, Query ‒ '(.+)' failed to find anything$/, "出现错误，查询 ‒ “$1”没有找到任何内容"],
+        [/^ID ‒ '(.+)' doesn't exist$/, "ID ‒ “$1”不存在"],
+        [/^Query ‒ '(.+)' failed to find anything$/, "查询 ‒ “$1”没有找到任何内容"],
+        [/^Error encountered, prevented spending of NaN (.+)$/, "出现错误，已阻止花费 NaN $1"],
+        [/^Failed to import (.+)$/, "导入失败：$1"],
+        [/^Failed to load global settings, default ones used instead (.+)$/, "加载全局设置失败，已改用默认设置$1"],
+        [/^Failed to save global setting (.+)$/, "保存全局设置失败$1"],
+        [/^Failed to save the game (.+)$/, "保存游戏失败$1"],
+        [/^Full clipboard write error: (.+)$/, "写入剪贴板失败：$1"],
+        [/^Game failed to load (.+)$/, "游戏加载失败$1"],
+        [/^Global settings load error, (.+)$/, "全局设置加载错误，$1"],
+        [/^Incorrect save file format (.+)$/, "存档格式不正确$1"],
+        [/^Offline calculation failed due to error: (.+)$/, "离线计算因错误失败：$1"],
+        [/^Save file version (.+) is not allowed$/, "不允许使用存档版本 $1"],
+        [/^Wasn't able to show event (.+), event text: (.+)$/, "无法显示事件 $1，事件文本：$2"],
+        [/^Welcome back, you were away for (.+)$/, "欢迎回来，你已离开 $1"],
+        [/^This save is (.+) old(.+)$/, "此存档已有 $1$2"],
+        [/^Game progress had increased to (.+)$/, "游戏进度已提升至 $1"],
+        [/^Toggled into (.+)$/, "已切换为$1"],
+        [/^Disabled due to (.+)$/, "因 $1 而被禁用"],
+        [/^Gain (.+) times more Strange quarks from any Stage reset\.$/, "任何阶段重置获得的奇异夸克提高 $1 倍。"],
+        [/^Gain (.+) times more Strange quarks from Stage resets per level\.(.*)$/, "每级使阶段重置获得的奇异夸克提高 $1 倍。$2"],
+        [/^Submerge quicker by boosting Puddles, effect is based on Rank\. \(Current boost: (.+) ⟶ (.+)\)$/, "通过提升水坑加快湮没速度，效果取决于等阶。（当前增益：$1 ⟶ $2）"],
+        [/^Puddles will get a boost based on Drops \^(.+)\. \(Boost: (.+)\)$/, "水坑将根据水滴 ^$1 获得增益。（增益：$2）"],
+        [/^Puddles will get a boost based on Moles \^(.+)\. \(Boost: (.+)\)$/, "水坑将根据摩尔 ^$1 获得增益。（增益：$2）"],
+        [/^Ponds will increase current Puddle amount\. \((.+) extra Puddle(s?) per Pond\)$/, "池塘将增加当前水坑数量。（每个池塘额外 $1 个水坑）"],
+        [/^Lakes will increase current Pond amount\. \((.+) extra Pond(s?) per Lake\)$/, "湖泊将增加当前池塘数量。（每个湖泊额外 $1 个池塘）"],
+        [/^Spreads enough water to make Seas increase current Lake amount\. \((.+) extra Lake(s?) per Sea\)$/, "扩散足够的水量使大海增加当前湖泊数量。（每个大海额外 $1 个湖泊）"],
+        [/^Molecules will produce Molecules, at a reduced rate\. \((.+) Molecules per second\)$/, "分子将以较低速率生产分子。（每秒 $1 个分子）"],
+        [/^Interstellar Stars will produce (.+) times more Stardust\.$/, "星际星球将生产 $1 倍的星尘。"],
+        [/^Self-made Structures will boost each other by an additional \+\(?(.+)\)?\.$/, "自建结构将互相额外提升 +$1。"],
+        [/^Small bodies will spontaneously concentrate into clumps\. \(Self-made Planetesimals will boost each other by (.+)\)$/, "小天体会自发聚集成团。（自建微行星将互相提升 $1）"],
+        [/^Slow encounter velocities will result in a more efficient growth\. (.+) from Cosmic dust will be increased by 2\.$/, "较低的相遇速度会带来更高效的成长。$1 的宇宙尘埃效果提高 2。"],
+        [/^Through random collisions every self-made Cosmic dust will (.+)\. \(By (.+) per self-made Cosmic dust\)$/, "通过随机碰撞，每个自建宇宙尘埃都会 $1。（每个自建宇宙尘埃 +$2）"],
+        [/^Melt the core to increase Accretion speed\. \(Cosmic dust strength will be increased by (.+)\)$/, "融化核心以加快吸积速度。（宇宙尘埃强度提高 $1）"],
+        [/^Make 'Rain Clouds' boost Seas and their own pre-Puddles effect, at a reduced rate\. \(Effect: (.+)\)$/, "使“雨云”以较低速率提升大海及其自身的水坑前效果。（效果：$1）"],
+        [/^No Energy will be lost when creating any Upgrade types(.+)\.$/, "创建任何类型的升级时都不会损失能量$1。"],
+        [/^Nothing special, just \+(.+) to max level of 'More Merges' equal to false Universes\.$/, "没什么特别的，只是使“更多合并”的最大等级 +$1，等于假宇宙数量。"],
+        [/^Have more or equal to (.+) Satellites(.+)\.$/, "拥有至少 $1 个卫星$2。"],
+        [/^Have current Merge score reach (.+)\.$/, "使当前合并分数达到 $1。"],
+        [/^From Planetesimals to Planets, will get (.+)x boost to Interstellar Stars with every level\. \(Total boost: (.+)\)$/, "从微行星到行星，每级使星际星球获得 $1 倍增益。（总增益：$2）"],
+        [/^Satellites cost scaling will be 2 times smaller\.(.+)$/, "卫星成本缩放降低为一半。$1"],
+        [/^More matter for the Accretion \(flavor text\), first two Intergalactic Structures will be (.+) times stronger\.$/, "为吸积提供更多物质（风味文本），前两个星系际结构将增强 $1 倍。"],
+        [/^Time since peak: (.+) \(Max time since peak: (.+)\)$/, "距峰值时间：$1（距峰值最长时间：$2）"],
+        [/^Gravitons (.+)x gain and (.+)x use rate$/, "引力子获取 $1 倍，使用速率 $2 倍"],
+        [/^Gravitons (.+)x use rate$/, "引力子使用速率 $1 倍"],
+        [/^Unlock a new Result for the Merge resets, requires enough self-made Galaxies before Merging\.(.+)$/, "为合并重置解锁新结果，需要在合并前拥有足够的自建星系。$1"],
+        [/^Unlock a new Accretion Rank to achieve\.(.+)$/, "解锁新的可达成吸积等阶。$1"],
+        [/^Unlock a new mini Stage '(.+)' and activate all of its effects\. (.+) can be found at the 'Advanced' subtab\.$/, "解锁新的迷你阶段“$1”并激活其所有效果。$2 可在“高级”子标签中找到。"],
+        [/^Unlock yet another an even better new Upgrade: (.+)\.$/, "再解锁一个更好的新升级：$1。"],
+        [/^Unlocked a new (.+) Achievement! \(If there were any\)$/, "解锁了新成就：$1！（如果有的话）"],
+        [/^Unlocked Galaxy Researches and a new Milestone\.(.+)$/, "解锁星系研究和新的里程碑。$1"],
+        [/^Can reset (.+) more time(.+)$/, "还能重置 $1 次$2"],
+        [/^Elements will no longer require Collapse for activation(.+)\. Second level will unlock auto creation of Elements\. \((.+)\)$/, "元素激活不再需要坍缩$1。第二级将解锁元素的自动创建。（$2）"],
+        [/^Expansion for the Abyss Stage through (.+) Upgrades \(Requires 'Darkness' Strangeness to activate all effects\)$/, "深渊阶段通过 $1 个升级扩展（需要“黑暗”奇异升级以激活所有效果）"],
+        [/^Improve 'Impulse' base strength even more\. \(This will increase total boost by (.+)\)$/, "进一步改进“冲量”的基础强度。（总增益将提高 $1）"],
+        [/^Improve 'Pebble accretion' Accretion speed even more\. (.+) from Cosmic dust will increased by 2\.$/, "进一步改进“卵石吸积”的吸积速度。$1 的宇宙尘埃效果提高 2。"],
+        [/^Increase Stage reset reward based on current Cloud amount\. \((.+): log10\(Clouds\) \/ 80 \+ 1(.*) \| Effect: (.+)(.*)\)$/, "根据当前云量提升阶段重置奖励。（$1：log10(云) / 80 + 1$2 | 效果：$3$4）"],
+        [/^Keep more of (.+)(.+) Resources by making related Structures(.+) not spend them on creation\. \(Affected Stages: (.+)\)$/, "通过让相关结构$3在创建时不消耗，来保留更多 $1$2 资源。（受影响阶段：$4）"],
+        [/^New Element '(.+)' (.+)$/, "新元素“$1”$2"],
+        [/^No corrosion, only boost to Interstellar Stars that is based on unspent Stardust \^(.+)\. \(Boost to Stars: (.+)\)$/, "无腐蚀，仅基于未花费的星尘 ^$1 提升星际星球。（星球增益：$2）"],
+        [/^Nucleate to (.+) (.+) fluid\.$/, "成核为 $1 个 $2 流体。"],
+        [/^Reset for (.+) (.+) fluid$/, "重置为 $1 个 $2 流体"],
+        [/^Result of Vacuum Instability, investigate at your own will \((.+)\)$/, "真空不稳定的结果，可自行探索（$1）"],
+        [/^Too late to appear, but it will make Galaxies scale in cost slower by (.+) anyway\.$/, "虽然出现得太晚，但它仍会使星系成本缩放降低 $1。"],
+        [/^Unspent Energy (.+) will boost 'Tritium' production of Molecules\. \(Boost: (.+)\)$/, "未花费的能量$1将提升分子的氚生产。（增益：$2）"],
+        [/^Which is equal to (.+)(.+)$/, "相当于 $1$2"],
+        [/^With higher density, first two Intergalactic Upgrades will be even stronger\. Effects will be increased by (.+)\.$/, "密度更高时，前两个星系际升级将更强。效果提高 $1。"],
+        [/^Combined and ready to make Red giants effect improve Brown dwarfs\. Also improves '\[24\] Chromium' Element by \+\^(.+)\.$/, "已合成，可使红巨星效果改进棕矮星。同时使“[24] 铬”元素 +^$1。"],
+        [/^Brittle earth metal and so is the brittle increase to the production\. \((.+)x boost to Interstellar Stars(.+)\)$/, "脆性土金属，产量的提升也同样脆弱。（星际星球获得 $1 倍增益$2）"],
+        [/^Complete with (.+) self-made Universes(.+)$/, "以 $1 个自建宇宙完成$2"],
+        [/^Element with no (.+), true head of this table\. This one is (.+)$/, "没有 $1 的元素，这张表真正的开头。这个是 $2"],
+        [/^Discharge goals will be able to boost 'Tritium'\. \(Current effect: (.+) \^ level\)$/, "放能目标将能提升“氚”。（当前效果：$1 ^ 等级）"],
+        [/^Discharge production boost from reached Goals will be increased by \+(.+)\. \(This is equal to (.+)x boost improvement\)$/, "已达成目标带来的放能产量增益提高 +$1。（等同于 $2 倍增益改进）"],
+        [/^Fusion reaction byproduct, makes Interstellar Stars cost scale \-(.+) less\.$/, "聚变反应副产物，使星际星球的成本缩放降低 $1。"]
+    ];
+    var _known = {};
+    cnRegReplace.forEach(function (v, k) { _known[k.source] = 1; });
+    for (var i = 0; i < _r.length; i++) if (!_known[_r[i][0].source]) cnRegReplace.set(_r[i][0], _r[i][1]);
+})();
+/* ---- 收尾修正 ---- */
+(function () {
+    // 用精确词条替代过于宽泛的“Toggled into”规则
+    var _drop = { "^Toggled into (.+)$": 1 };
+    cnRegReplace.forEach(function (v, k) { if (_drop[k.source]) cnRegReplace.delete(k); });
+    var _e = {
+        "Toggled into Void": "已切换为虚空",
+        "Toggled into Supervoid": "已切换为超级虚空",
+        "Toggled into Vacuum stability": "已切换为真空稳定性",
+        "Toggled into true Vacuum": "已切换为真真空",
+        "Toggled into false Vacuum": "已切换为假真空"
+    };
+    for (var k in _e) if (!Object.prototype.hasOwnProperty.call(cnItems, k)) cnItems[k] = _e[k];
+    var _r = [
+        [/^Boost (.+) to Interstellar Stars$/, "星际星球获得 $1 增益"],
+        [/^Boost (.+) to the Accretion$/, "吸积获得 $1 增益"]
+    ];
+    var _known = {};
+    cnRegReplace.forEach(function (v, k) { _known[k.source] = 1; });
+    for (var i = 0; i < _r.length; i++) if (!_known[_r[i][0].source]) cnRegReplace.set(_r[i][0], _r[i][1]);
+})();
 
+/* ---- 名词补齐 + 资源后缀 ---- */
+(function () {
+    var _n = {
+        "Adhesion": "附着力",
+        "Atmosphere": "大气",
+        "Buy once": "仅购买一次",
+        "Cosmon costs": "宇宙子成本",
+        "Deuterium": "氘",
+        "Electrons": "电子",
+        "Gas": "气体",
+        "Gravity": "引力",
+        "Hotkey button": "热键按钮",
+        "Hotkey span": "热键区域",
+        "Impulse": "脉冲",
+        "Max level": "最大等级",
+        "Micrometeoroid": "微流星体",
+        "Neutrons": "中子",
+        "Nova": "新星",
+        "Nucleosynthesis": "核聚合",
+        "One time": "一次性",
+        "Permanent": "永久",
+        "Protium": "氕",
+        "Protons": "质子",
+        "Quasar": "类星体",
+        "Repeatable": "可重复",
+        "River": "河流",
+        "Stream": "水流",
+        "Superposition": "叠加",
+        "Tide": "潮汐",
+        "Tsunami": "海啸",
+        "Viscosity": "粘度",
+        "Weight": "重量",
+        "[10] Neon": "[10] 氖",
+        "[11] Sodium": "[11] 钠",
+        "[12] Magnesium": "[12] 镁",
+        "[13] Aluminium": "[13] 铝",
+        "[14] Silicon": "[14] 硅",
+        "[15] Phosphorus": "[15] 磷",
+        "[16] Sulfur": "[16] 硫",
+        "[17] Chlorine": "[17] 氯气",
+        "[18] Argon": "[18] 氩气",
+        "[19] Potassium": "[19] 钾",
+        "[1] Hydrogen": "[1] 氢",
+        "[20] Calcium": "[20] 钙",
+        "[21] Scandium": "[21] 钪",
+        "[22] Titanium": "[22] 钛",
+        "[23] Vanadium": "[23] 钒",
+        "[24] Chromium": "[24] 铬",
+        "[25] Manganese": "[25] 锰",
+        "[26] Iron": "[26] 铁",
+        "[27] Cobalt": "[27] 钴",
+        "[28] Nickel": "[28] 镍",
+        "[29] Copper": "[29] 铜",
+        "[2] Helium": "[2] 氦",
+        "[30] Zinc": "[30] 锌",
+        "[31] Gallium": "[31] 镓",
+        "[32] Germanium": "[32] 锗",
+        "[33] Arsenic": "[33] 砷",
+        "[34] Selenium": "[34] 硒",
+        "[35] Bromine": "[35] 溴",
+        "[36] Krypton": "[36] 氪",
+        "[3] Lithium": "[3] 锂",
+        "[4] Beryllium": "[4] 铍",
+        "[5] Boron": "[5] 硼",
+        "[6] Carbon": "[6] 碳",
+        "[7] Nitrogen": "[7] 氮",
+        "[8] Oxygen": "[8] 氧",
+        "[9] Fluorine": "[9] 氟"
+    };
+    for (var k in _n) if (!Object.prototype.hasOwnProperty.call(cnItems, k)) cnItems[k] = _n[k];
+    var _p = {
+        " Inflatons.": " 膨胀点。",
+        " Inflatons": " 膨胀点",
+        " Cosmons.": " 宇宙子。",
+        " Cosmons": " 宇宙子",
+        " Tachyons.": " 快子。",
+        " Tachyons": " 快子",
+        " Strange quarks.": " 奇异夸克。",
+        " Strange quarks": " 奇异夸克",
+        " Strangelets.": " 奇异粒子。",
+        " Strangelets": " 奇异粒子",
+        " Dark matter.": " 暗物质。",
+        " Stardust.": " 星尘。"
+    };
+    for (var p in _p) if (!Object.prototype.hasOwnProperty.call(cnPostfix, p)) cnPostfix[p] = _p[p];
+})();
+
+/* ==== 挑战与膨胀描述逐行补全 ==== */
+(function () {
+    function cnWord(w) {
+        if (!w) return w;
+        if (Object.prototype.hasOwnProperty.call(cnItems, w) && typeof cnItems[w] === 'string') return cnItems[w];
+        var d = cnItems[w + '.'];
+        if (typeof d === 'string') return d.replace(/。$/, '');
+        if (Object.prototype.hasOwnProperty.call(cnItems, ' ' + w) && typeof cnItems[' ' + w] === 'string') return cnItems[' ' + w];
+        if (typeof cnPrefix[w] === 'string') return cnPrefix[w];
+        return w;
+    }
+    window.cnWord = cnWord;
+    var _e = [
+        [/^‒ Microworld Structures are 4 times weaker$/, '‒ 微观世界结构强度降低为 1/4'],
+        [/^‒ Discharge base is raised to the root of 2 \(\^(.+)\)$/, '‒ 放能基础提高到 2 的平方根（^$1）'],
+        [/^‒ Energy gain from Submerged and Accretion Stages is divided by 2$/, '‒ 湮没与吸积阶段的能量获取减半'],
+        [/^‒ Energy gain from Interstellar and Intergalactic Stages is divided by 4$/, '‒ 星际与星系际阶段的能量获取降至 1/4'],
+        [/^More nerfs will be shown with more rewards$/, '更多削弱将随更多奖励显示'],
+        [/^More nerfs will be shown after running out of time \(WIP\)$/, '时间耗尽后会显示更多削弱（开发中）'],
+        [/^‒ Drops above 1 do not increase their own strength$/, '‒ 超过 1 的水滴不会提升自身强度'],
+        [/^‒ Puddles are (.+) times weaker$/, '‒ 水坑强度降低为 1/$1'],
+        [/^‒ Clouds gain is decreased by \^(.+)$/, '‒ 云获取降低 ^$1'],
+        [/^‒ 'Water spread' and the first two Researches are weaker$/, '‒ “水流扩散”和前两项研究被削弱'],
+        [/^‒ Clouds effects softcaps instanly$/, '‒ 云的效果立即受软上限限制'],
+        [/^‒ Cosmic dust is softcapped \(\^(.+)\)$/, '‒ 宇宙尘埃受软上限限制（^$1）'],
+        [/^‒ Softcap is stronger after reaching 'Jovian planet' Rank \(\^(.+)\)$/, '‒ 达到“类木行星”等阶后软上限更强（^$1）'],
+        [/^‒ Increasing Rank doesn't increase effective Rank$/, '‒ 提升等阶不会提高有效等阶'],
+        [/^‒ Effective Rank is reduced by -1 after reaching 'Jovian planet' Rank$/, '‒ 达到“类木行星”等阶后有效等阶 -1'],
+        [/^‒ Interstellar Stars are (.+) times weaker$/, '‒ 星际星球强度降低为 1/$1'],
+        [/^‒ Solar mass gain is 2 times smaller$/, '‒ 太阳质量获取减半'],
+        [/^‒ Solar mass effect is softcapped \^(.+) after 1$/, '‒ 太阳质量效果超过 1 后受软上限限制 ^$1'],
+        [/^‒ Quasi-stars do not produce anything and scale in cost 10 times faster$/, '‒ 准星不生产任何东西，成本缩放快 10 倍'],
+        [/^‒ Can't create or gain Quasi-stars$/, '‒ 无法创建或获得准星'],
+        [/^‒ Everything cost 100 times more Stardust, excludes Brown dwarfs$/, '‒ 所有东西的星尘成本提高 100 倍（棕矮星除外）'],
+        [/^‒ All resets affect all Stages$/, '‒ 所有重置影响所有阶段'],
+        [/^‒ All pre-Abyss resets affect all pre-Abyss Stages$/, '‒ 所有深渊前的重置影响所有深渊前阶段'],
+        [/^‒ Global speed is set to 0$/, '‒ 全局速度设为 0'],
+        [/^‒ Stage resets are disabled$/, '‒ 阶段重置已禁用'],
+        [/^‒ All Stages are removed from reset cycle$/, '‒ 所有阶段从重置循环中移除'],
+        [/^‒ Global speed is decreased by (.+)$/, '‒ 全局速度降低 $1'],
+        [/^‒ Milestones time limit is 0 seconds$/, '‒ 里程碑时间限制为 0 秒'],
+        [/^‒ Permanent Stages are removed from reset cycle$/, '‒ 永久阶段从重置循环中移除'],
+        [/^‒ Some nerfs get harsher after every Completion$/, '‒ 每次完成后部分削弱会更严厉'],
+        [/^‒ Strange quarks from Stage resets are decreased by (.+)$/, '‒ 阶段重置获得的奇异夸克减少 $1'],
+        [/^‒ Strange quarks from non-Interstellar Stage resets are further decreased by (.+)$/, '‒ 非星际阶段重置获得的奇异夸克再减少 $1'],
+        [/^‒ Stage resets above (.+) decrease Strange quarks from the Stage resets by 2$/, '‒ 超过 $1 的阶段重置会使阶段重置的奇异夸克减少 2'],
+        [/^‒ Going above 10 minutes of the Stage time will force Stage reset$/, '‒ 阶段时间超过 10 分钟将强制阶段重置'],
+        [/^‒ If can't reset after 10 minutes then Vacuum reset is forced instead(.*)$/, '‒ 若 10 分钟后仍无法重置，则强制真空重置$1'],
+        [/^‒ Passive Strange quarks gain is disabled$/, '‒ 被动奇异夸克获取已禁用'],
+        [/^‒ Galaxies scale in cost faster by \+(.+)$/, '‒ 星系成本缩放加快 +$1'],
+        [/^‒ Intergalactic Upgrade 'Galactic Merger' cost (.+) times more$/, '‒ 星系际升级“星系合并”成本提高 $1 倍'],
+        [/^‒ Merge requirement is set to (.+)$/, '‒ 合并需求设为 $1'],
+        [/^‒ Having (.+) (.+) energy in true Vacuum will replace Big Crunch with Big Rip$/, function (m, a, b) { return '‒ 在真真空中拥有 ' + a + ' ' + cnWord(b) + '能量会将大挤压替换为大撕裂'; }],
+        [/^‒ Current Big Rip reward is at (.+)$/, '‒ 当前大撕裂奖励为 $1'],
+        [/^‒ (.+) is not immune to Stage resets$/, function (m, a) { return '‒ ' + cnWord(a) + '不免疫阶段重置'; }],
+        [/^‒ Requires special automatizations \(Needs to be enabled in Settings\)$/, '‒ 需要特殊自动化（需在设置中启用）'],
+        [/^‒ In true Vacuum boosts Universes by (.+) \(Merge score \/ (.+) \+ 1\)$/, '‒ 在真真空中使宇宙提升 $1（合并分数 / $2 + 1）'],
+        [/^‒ In false Vacuum makes Abyss immune to non-Abyss Stage resets$/, '‒ 在假真空中使深渊免疫非深渊的阶段重置'],
+        [/^‒ Inside Void cost for everything is increased by 10 and weaken some Upgrades$/, '‒ 虚空内所有成本提高 10，并削弱部分升级'],
+        [/^‒ Time limit is always active \(WIP\)$/, '‒ 时间限制始终生效（开发中）'],
+        [/^‒ Time limit is based on Universe age \(WIP\)$/, '‒ 时间限制基于宇宙年龄（开发中）'],
+        [/^Increase basic resources gain by (.+?), Tachyons gain by (.+)\.$/, '使基础资源获取提高 $1，快子获取提高 $2。'],
+        [/^\(Basic resources includes Molecules, Drops, Mass, Stardust and (.+)\)$/, '（基础资源包括摩尔、水滴、质量、星尘和暗物质）'],
+        [/^Increase max level for 'More global speed', 'More Strange quarks' and 'More Strangelets' by \+4\.$/, '使“更多全局速度”“更多奇异夸克”和“更多奇异粒子”的最大等级 +4。'],
+        [/^Cosmon costs for new levels are (.+), (.+) and (.+)\.$/, '新等级的宇宙子成本为 $1、$2 和 $3。'],
+        [/^Increase max level for 'Overboost', 'Strange gain' and 'Better rewards' by \+1'?\.$/, '使“超提升”“奇异获取”和“更好的奖励”的最大等级 +1。'],
+        [/^Gain extra 1 \+ Multiverses extra Inflatons per level\.$/, '每级额外获得 1 + 多元宇宙数量的膨胀点。'],
+        [/^Convert 1 unsafe Merge reset into safe\.$/, '将 1 次不安全的合并重置转为安全。'],
+        [/^If there is no unsafe resets to convert, before this Inflation, then adds one\.$/, '若此前没有可转换的不安全重置，则增加 1 次。'],
+        [/^Boost global speed by (.+?), but reduce time limit for Challenges by (.+?), if level is below 2\.$/, '使全局速度提升 $1 倍，但若等级低于 2，则将挑战的时间限制降低 $2 倍。'],
+        [/^Boost global speed by (.+?), but reduce time limit for on everything that has it by (.+?), if level is below 2\.$/, '使全局速度提升 $1 倍，但若等级低于 2，则将所有带时间限制内容的时间限制降低 $2 倍。'],
+        [/^If not inside any Challenge, then 2nd level will instead boost global speed by (.+)\.$/, '若不在任何挑战中，则第 2 级改为使全局速度提升 $1 倍。'],
+        [/^If there is no time limit, then 2nd level will instead boost global speed by (.+) \(strength depletes over 1 hour of the Stage time\)\.$/, '若没有时间限制，则第 2 级改为使全局速度提升 $1 倍（强度会在阶段时间 1 小时内衰减）。'],
+        [/^\(Every level above 2 increases speed by 2\)$/, '（2 级之后每级再提高 2 倍速度）'],
+    ];
+    var _known = {};
+    cnRegReplace.forEach(function (v, k) { _known[k.source] = 1; });
+    for (var i = 0; i < _e.length; i++) if (!_known[_e[i][0].source]) cnRegReplace.set(_e[i][0], _e[i][1]);
+})();
+
+/* ==== 膨胀升级描述逐行补全 ==== */
+(function () {
+    var _i = [
+        [/^Boost global speed by unspent (.+?) \^(.+)\.$/, function (m, a, b) { return '使全局速度提升（未花费的' + cnWord(a) + '）^' + b + '。'; }],
+        [/^\(Boost per level: (.+?), softcaps after (.+?) (.+?)\. Global speed doesn't speed up game ticks\)$/, function (m, a, b, c) { return '（每级增益：' + a + '，软上限为 ' + b + ' ' + cnWord(c) + '。全局速度不会加快游戏 tick）'; }],
+        [/^First (.+?) levels \(1 per Vacuum stability completion\) will also boost global speed by (.+?), but only while inside any Challenge\.$/, '前 $1 级（每次完成真空稳定性获得 1 级）还会使全局速度提升 $2 倍，但仅在挑战内生效。'],
+        [/^Boost global speed and Stage reset reward by (.+?), strength is based on Supervoid progress in the current End reset\.$/, '使全局速度与阶段重置奖励提升 $1 倍，强度取决于当前终结重置中的超级虚空进度。'],
+        [/^Boost global speed and Stage reset reward by (.+?), strength is based on Supervoid progress\.$/, '使全局速度与阶段重置奖励提升 $1 倍，强度取决于超级虚空进度。'],
+        [/^\(While in true Vacuum effective level is increased by \+(.+) per Void Universe\)$/, '（在真真空中，每个虚空宇宙使有效等级 +$1）'],
+        [/^For false Vacuum it will remove time limit from Milestones, allow Merging without changing Vacuum state, creation of false Universes and being able to reset (.+?) for Strangelets\.$/, function (m, a) { return '对假真空而言，将移除里程碑的时间限制，并允许在不改变真空状态的情况下合并、创建假宇宙，以及能够为获得奇异粒子而重置' + cnWord(a) + '。'; }],
+        [/^For false Vacuum it will remove time limit from Milestones\.$/, '对假真空而言，将移除里程碑的时间限制。'],
+        [/^For true Vacuum it will unlock false Vacuum Milestones for Void\. Their effects are active anywhere, but only if this Inflation is active\.$/, '对真真空而言，将为虚空解锁假真空里程碑。其效果在任何地方都生效，但仅在此膨胀启用时有效。'],
+        [/^Gain (.+?) ⟶ (.+?) times more Strangelets from Stage resets per level\.$/, '每级使阶段重置获得的奇异粒子提高 $1 ⟶ $2 倍。'],
+        [/^Also increase 'Strange gain' main effect base by \+(.+) per level and secondary by \+(.+) per level\.$/, '同时每级使“奇异获取”的主效果基础 +$1，副效果 +$2。'],
+        [/^More rewards from pre-Stage resets:$/, '来自阶段前重置的更多奖励：'],
+        [/^\+3 free Goals, 10 times \(8 times in false Vacuum\) cheaper Clouds, \+2 effective Ranks, (.+?)x to the Solar mass gain, \+1 unsafe Merge reset and 2 times cheaper (.+?) fluid\.$/, function (m, a, b) { return '+3 个免费目标，云便宜 10 倍（假真空中 8 倍），有效等阶 +2，太阳质量获取 ' + a + ' 倍，+1 次不安全合并重置，且' + cnWord(b) + '流体便宜 2 倍。'; }],
+        [/^Unlock 1 minute Warps for the price of (.+?) minutes of stored Offline time\.$/, '以 $1 分钟的已存离线时间解锁 1 分钟的时间跃迁。'],
+        [/^Increase Export storage by \+(.+?)% of the Stage reset value after any Stage reset\.$/, '任何阶段重置后，导出存储量提高阶段重置值的 +$1%。'],
+        [/^If inside any Challenge, then it will boost global speed by (.+?), but decrease time limit by (.+?)\.$/, '若在挑战内，则使全局速度提升 $1 倍，但时间限制降低 $2 倍。'],
+        [/^\(Warps can be found next to Offline auto rejection setting, Offline time is stored by being rejected, up to 12 hours\)$/, '（时间跃迁可在离线自动拒绝设置旁找到；被拒绝的离线时间会被存储，最多 12 小时）'],
+        [/^Boost global speed again by (.+)\.$/, '再次使全局速度提升 $1 倍。'],
+        [/^Boost Strange quarks gain from the Stage resets again by (.+)\.$/, '再次使阶段重置的奇异夸克获取提高 $1 倍。'],
+        [/^Boost Strangelets gain from the Stage resets by (.+)\.$/, '使阶段重置的奇异粒子获取提高 $1 倍。'],
+        [/^Gain (.+?) times more Cosmons from Universes on End resets\.$/, '终结重置时从宇宙获得 $1 倍的宇宙子。'],
+        [/^\(Doesn't include true Vacuum Cosmon, max level will be increased after spending (.+?) more Cosmons\)$/, '（不包含真真空宇宙子；再花费 $1 个宇宙子后最大等级会提升）'],
+        [/^True Vacuum only, gain \+1 free Goal, improve Discharge base by \+(.+?) \(immune to the softcap\) and decrease requirement scaling by \-(.+?) with every level\.$/, '仅限真真空：获得 +1 个免费目标，每级使放能基础 +$1（免疫软上限），需求缩放 -$2。'],
+        [/^True Vacuum only, make effective Rank boost even more: \(all effects are per Rank\)$/, '仅限真真空，使有效等阶增益更强：（所有效果均按等阶计算）'],
+        [/^\+(.+?) Discharge goals at level 1, \+1 to max level of 'Planetary system' Interstellar Research at level 2, (.+?)x to the Solar mass gain at level 3 and finally (.+?)x to Stage reset reward at level 4\.$/, '1 级：+$1 个放能目标；2 级：“行星系统”星际研究最大等级 +1；3 级：太阳质量获取 $2 倍；4 级：阶段重置奖励 $3 倍。'],
+        [/^True Vacuum only, reclaim up to 25% of Remnants once \(doesn't affect Milestones\)\.$/, '仅限真真空：可回收最多 25% 的残骸一次（不影响里程碑）。'],
+        [/^Second level will increase max level of 'Galactic tide' Strangeness, but only provides passive effect until level 3\.$/, '第二级会提高“星系潮汐”奇异升级的最大等级，但在 3 级前只提供被动效果。'],
+        [/^Third level also increases max level of 'Main giants' by \+2, improves effect and makes it affect Neutron stars\.$/, '第三级还会使“主序巨星”的最大等级 +2，改进效果并使其影响中子星。'],
+        [/^Final level will increase max level of 'Automatic Collapse' Strangeness\.$/, '最后一级会提高“自动坍缩”奇异升级的最大等级。'],
+        [/^\(Affected Stages: (.+)\)$/, '（受影响阶段：$1）'],
+        [/^Stabilize false Vacuum, which in turn will unlock new Strangeness and add new effect into 'Void Milestones' Inflation:$/, '稳定假真空，从而解锁新的奇异升级并为“虚空里程碑”膨胀增加新效果：'],
+        [/^Merging without changing Vacuum state, creation of false Universes and more\.$/, '在不改变真空状态的情况下合并、创建假宇宙等。'],
+        [/^For true Vacuum this will allow creation of Quasi-stars inside Void, they will not produce anything and will scale in cost 10 times faster\.$/, '对真真空而言，这将允许在虚空内创建准星；它们不生产任何东西，且成本缩放快 10 倍。']
+    ];
+    var _known = {};
+    cnRegReplace.forEach(function (v, k) { _known[k.source] = 1; });
+    for (var i = 0; i < _i.length; i++) if (!_known[_i[i][0].source]) cnRegReplace.set(_i[i][0], _i[i][1]);
+})();
+
+/* ==== 奇异升级通用句式 ==== */
+(function () {
+    var _s = [
+        [/^Boost Microworld Structures by ([\d.,eE+\-]+)\.$/, '使微观世界结构提升 $1。'],
+        [/^Base for 'Improved Tritium' Research will be bigger by \+([\d.,eE+\-]+)\.$/, '“改进的氚”研究的基础提高 +$1。'],
+        [/^\(Boost from it at current Research level is ([\d.,eE+\-]+)\)$/, '（当前研究等级带来的增益为 $1）'],
+        [/^Discharge goals requirement will scale slower\. \(-([\d.,eE+\-]+)\)$/, '放能目标需求的缩放变慢。（-$1）'],
+        [/^\(Creating this Strangeness will make the next Discharge goal to be ([\d.,eE+\-]+) Energy\)$/, '（创建此奇异升级后，下一个放能目标为 $1 能量）'],
+        [/^Obtain \+([\d.,eE+\-]+) bonus Discharge goals\.$/, '获得 +$1 个额外放能目标。'],
+        [/^Increase max level for '(.+?)' Stage Research by \+([\d.,eE+\-]+) at first level and '(.+?)' Stage Research by \+([\d.,eE+\-]+) at second level\.$/,
+        function (m, a, b, c, d) { return '第一级使“' + cnWord(a) + '”阶段研究最大等级 +' + b + '，第二级使“' + cnWord(c) + '”阶段研究最大等级 +' + d + '。'; }],
+        [/^Increase max level for '(.+?)' Interstellar Research by \+([\d.,eE+\-]+) at first level and '(.+?)' Interstellar Research by \+([\d.,eE+\-]+) at second level\.$/,
+        function (m, a, b, c, d) { return '第一级使“' + cnWord(a) + '”星际研究最大等级 +' + b + '，第二级使“' + cnWord(c) + '”星际研究最大等级 +' + d + '。'; }],
+        [/^Increase max level for '(.+?)' Rank Research by \+([\d.,eE+\-]+) at first level and '(.+?)' Rank Research by \+([\d.,eE+\-]+) at second level\.$/,
+        function (m, a, b, c, d) { return '第一级使“' + cnWord(a) + '”等阶研究最大等级 +' + b + '，第二级使“' + cnWord(c) + '”等阶研究最大等级 +' + d + '。'; }],
+        [/^Increase max level for '(.+?)' Collapse Research by \+([\d.,eE+\-]+) at first level and '(.+?)' Collapse Research by \+([\d.,eE+\-]+) at second level\.$/,
+        function (m, a, b, c, d) { return '第一级使“' + cnWord(a) + '”坍缩研究最大等级 +' + b + '，第二级使“' + cnWord(c) + '”坍缩研究最大等级 +' + d + '。'; }],
+        [/^Final level will instead unlock a new Upgrade \u2012 '?(.+?)'? that costs ([\d.,eE+\-]+) (.+?)\.$/,
+        function (m, a, b, c) { return '最后一级改为解锁新升级 ‒ “' + cnWord(a) + '”（花费 ' + b + ' ' + cnWord(c) + '）。'; }],
+        [/^Final level will instead unlock an even better new Upgrade \u2012 '?(.+?)'? that costs ([\d.,eE+\-]+) (.+?)\.$/,
+        function (m, a, b, c) { return '最后一级改为解锁更好的新升级 ‒ “' + cnWord(a) + '”（花费 ' + b + ' ' + cnWord(c) + '）。'; }],
+        [/^Satellites will be able to improve remaining ([\d.,eE+\-]+) Structures, but at reduced strength \(\^([\d.,eE+\-]+)\)\.$/, '卫星将能改进剩余的 $1 个结构，但强度降低（^$2）。'],
+        [/^\(Affected Structures are Cosmic dust and Planetesimals, boost is equal to ([\d.,eE+\-]+)\)$/, '（受影响结构为宇宙尘埃和微行星，增益等于 $1）'],
+        [/^Interstellar Stars will produce ([\d.,eE+\-]+) times more Stardust\.$/, '星际星球将生产 $1 倍的星尘。'],
+        [/^Interstellar Stars will be 2 times cheaper\.$/, '星际星球便宜 2 倍。'],
+        [/^Unlock a new Upgrade, its pretty good:$/, '解锁一个新的升级，相当不错：'],
+        [/^Gain ([\d.,eE+\-]+) times more Strangelets from (.*)Stage resets\.$/, function (m, a, b) { var s = b.trim(); return '从' + (s === 'the' || s === '' ? '' : ' ' + cnWord(s)) + '阶段重置获得的奇异粒子提高 ' + a + ' 倍。'; }],
+        [/^Unlock a new mini Stage '(.+?)' and activate all of its effects\.$/, function (m, a) { return '解锁新的迷你阶段“' + cnWord(a) + '”并激活其所有效果。'; }],
+        [/^Increase effective amount of Neutron stars \(doesn't include ones from '\[22\] Titanium'\) by 1 \+ level and improve Neutron stars strength by \+\^([\d.,eE+\-]+)\.$/, '使中子星的有效数量提高 1 + 等级（不含来自“[22] 钛”的），并使中子星强度 +^$1。'],
+        [/^Delay Cosmic dust hardcap by ([\d.,eE+\-]+) per level\.$/, '每级使宇宙尘埃硬上限延迟 $1。'],
+        [/^Increase Stage reset reward based on current Cloud amount\.$/, '根据当前云量提升阶段重置奖励。'],
+        [/^Second level will unlock auto creation of Elements\. \((.+)\)$/, '第二级将解锁元素的自动创建。（$1）'],
+        [/^More matter for the Accretion \(flavor text\), first two Intergalactic Structures will be ([\d.,eE+\-]+) times stronger\.$/, '为吸积提供更多物质（风味文本），前两个星系际结构将增强 $1 倍。'],
+        [/^Increase max level for 'More streams' Stage Research by \+1 at first level and 'Distributary channel' Stage Research by \+1 at second level\.$/, '第一级使“更多水流”阶段研究最大等级 +1，第二级使“分流河道”阶段研究最大等级 +1。'],
+        [/^Increase max level for 'Stronger surface tension' Stage Research by \+3 at first level and 'Stronger surface stress' Stage Research by \+1 at second level\.$/, '第一级使“更强表面张力”阶段研究最大等级 +3，第二级使“更强表面应力”阶段研究最大等级 +1。'],
+    ];
+    var _known = {};
+    cnRegReplace.forEach(function (v, k) { _known[k.source] = 1; });
+    for (var i = 0; i < _s.length; i++) if (!_known[_s[i][0].source]) cnRegReplace.set(_s[i][0], _s[i][1]);
+})();
+/* ---- 收尾小规则 ---- */
+(function () {
+    var extra = [
+        [/^Interstellar Stars will produce ([\d.,eE+\-]+) times more\s*$/, '星际星球将生产 $1 倍的']
+    ];
+    var known = {};
+    cnRegReplace.forEach(function (v, k) { known[k.source] = 1; });
+    for (var i = 0; i < extra.length; i++) if (!known[extra[i][0].source]) cnRegReplace.set(extra[i][0], extra[i][1]);
+})();
+
+/* ==== 升级/自动结构描述补全 ==== */
+(function () {
+    var _u = [
+        [/^Automatically make (.+?) \(counts as self-made\) if cost is X times of the available resource\.$/, function (m, a) { return '自动生产' + cnWord(a) + '（视为自产），当成本为可用资源的 X 倍时。'; }],
+        [/^\(Current auto wait value is (.+?), unlocked auto Structures: (.+?)\. '!' means that it ignores wait value\)$/, function (m, a, b) { if (b === 'none') return '（当前自动等待值为 ' + a + '，尚未解锁自动结构）'; var list = b.split(',').map(function (x) { var t = x.trim(), bang = /!$/.test(t); if (bang) t = t.slice(0, -1); t = cnWord(t); return t + (bang ? '!' : ''); }).join('，'); return '（当前自动等待值为 ' + a + '，已解锁自动结构：' + list + '）'; }],
+        [/^\(Current auto wait value is (.+?), unlocked auto Structures: (.+)\)$/, function (m, a, b) { if (b === 'none') return '（当前自动等待值为 ' + a + '，尚未解锁自动结构）'; var list = b.split(',').map(function (x) { var t = x.trim(), bang = /!$/.test(t); if (bang) t = t.slice(0, -1); t = cnWord(t); return t + (bang ? '!' : ''); }).join('，'); return '（当前自动等待值为 ' + a + '，已解锁自动结构：' + list + '）'; }],
+        [/^Elements will no longer require Collapse for activation\.$/, '元素不再需要坍缩即可激活。'],
+        [/^Second level will unlock auto creation of Elements\.$/, '第二级将解锁元素的自动创建。'],
+        [/^Gravitons (.+?)x gain and (.+?)x use rate$/, '引力子获取 ×$1，使用率 ×$2'],
+        [/^(.+?)x cheaper Virtual particles$/, '虚拟粒子便宜 $1 倍'],
+        [/^(.+?)x Virtual particles gain$/, '虚拟粒子获取 ×$1'],
+        [/^(.+?)x Quasiparticles gain$/, '准粒子获取 ×$1'],
+        [/^Gravitons (.+?)x use rate$/, '引力子使用率 ×$1'],
+        [/^(.+?)x Quantum foam gain$/, '量子泡沫获取 ×$1'],
+        [/^Auto Quantum foam$/, '自动量子泡沫'],
+        [/^Auto Virtual particles$/, '自动虚拟粒子'],
+        [/^Auto Quasiparticles$/, '自动准粒子'],
+        [/^A spheroidal conglomeration of Stars that is even more dense than Super Star cluster, it will boost Star clusters by (.+)\.$/, '比超级星团更致密的球状恒星集团，使星团提升 $1 倍。'],
+        [/^Solar mass will not decrease if to reset below current\. \(Hover over Remnants effects to see what they boost\)$/, '重置到低于当前值时太阳质量不会减少。（将鼠标悬停在残骸效果上可查看其增益内容）'],
+        [/^Gain ability to convert Drops into Clouds\. Cloud gain formula: \(Drops \/ (.+?)\) \^ (.+?), gain is reduced with Clouds\.$/, '可以将水滴转化为云。云获取公式：（水滴 / $1）^ $2，云越多获取越少。'],
+        [/^Ability to regain spent Energy and if had enough Energy, it will also boost production of Structures by (.+)\.$/, '可以回收已花费的能量；若能量足够，还会使结构产量提升 $1 倍。'],
+        [/^Unlock a new reset, it will start the formation of the new resources by modifing existing physics\.$/, '解锁新的重置，它会通过改变现有物理法则开始形成新资源。'],
+        [/^Region of space that is undergoing a larger amount of Star formations, it will boost Nebulas by (.+)\.$/, '一片恒星形成更活跃的空间区域，使星云提升 $1 倍。'],
+        [/^An entire Galaxy that is undergoing higher rate of Star formations, it will boost Galaxies by (.+)\.$/, '整个星系都在以更高速度形成恒星，使星系提升 $1 倍。'],
+        [/^A new substance for the Accretion, it will provide boost to Cosmic dust based on its quantity\.$/, '用于吸积的新物质，会根据其数量为宇宙尘埃提供增益。'],
+        [/^Spreads enough water to make Seas increase current Lake amount\. \((.+?) extra Lake\(s?\) per Sea\)$/, '扩散足够的水量使大海增加当前湖泊数量。（每个大海额外 $1 个湖泊）'],
+        [/^Speed up the creation of new Elements by adding even more (.+?) \(p-process and rp-process\)\.$/, '通过加入更多$1（p 过程与 rp 过程）来加快新元素的生成。'],
+        [/^Shattered pieces will fall back together\.$/, '碎裂的碎片会重新聚合。'],
+        [/^from Cosmic dust will be increased by (.+)\.$/, '来自宇宙尘埃的获取提高 $1 倍。'],
+        [/^from Cosmic dust will increased by (.+)\.$/, '来自宇宙尘埃的获取提高 $1 倍。'],
+        [/^Spread water faster with every Puddle, current formula is (.+)$/, '每个水坑都能加快水的扩散，当前公式为 $1。'],
+        [/^Bodies will become massive enough to affect each other with their own gravity\.$/, '天体将变得足够巨大，能以自身引力相互影响。'],
+        [/^After reaching equilibrium, self-made Protoplanets will boost each other by (.+)\.$/, '达到平衡后，自产的原行星彼此提供 $1 倍增益。'],
+        [/^Nebula that is dense enough to block the light, it will boost Nebulas by (.+)\.$/, '致密到能遮蔽光线的星云，使星云提升 $1 倍。'],
+        [/^Create new Atomic nuclei with Neutron capture \(s-process and r-process\)\.$/, '通过中子俘获（s 过程与 r 过程）生成新的原子核。'],
+        [/^\(Effect will be increased by \+ (.+?) for every new digit of Solar mass past (.+?)\)$/, '（太阳质量每超过 $2 一位数字，效果再 +$1）'],
+        [/^Puddles after 200 and non-self-made ones are raised to the power of (.+)\.$/, '超过 200 的水坑以及非自产水坑会被乘幂至 $1 次方。'],
+        [/^Just a small meteoroid, but it will be a good base for what to come\.$/, '只是一颗小流星体，但它会是不错的起点。'],
+        [/^Ponds will increase current Puddle amount\. \((.+?) extra Puddle\(s?\) per Pond\)$/, '池塘将增加当前水坑数量。（每个池塘额外 $1 个水坑）'],
+        [/^Lakes will increase current Pond amount\. \((.+?) extra Pond\(s?\) per Lake\)$/, '湖泊将增加当前池塘数量。（每个湖泊额外 $1 个池塘）'],
+        [/^Make Galaxies (.+?) times cheaper, based on current Merge score \/ (.+?) \+ 1\.$/, '使星系便宜 $1 倍，基于当前合并分数 / $2 + 1。'],
+        [/^Allow for Star clusters to be boosted by \('Gravity' \/ (.+?)\) \^ (.+?) \+ 1\.$/, '让星团获得增益：（「重力」/ $1）^ $2 + 1。'],
+        [/^A very massive Star cluster that will boost Star clusters by (.+)\.$/, '极其巨大的星团，使星团提升 $1 倍。'],
+        [/^Unspent Energy (.+?) will boost 'Tritium' production of Molecules\.$/, '未花费的$1能量会提升分子的氚产量。'],
+        [/^\(Unlock a new Structure and get (.+?)x boost to Planetesimals\)$/, '（解锁新结构，并使微行星获得 $1 倍增益）'],
+        [/^\(Unlock a new Structure and get (.+?)x boost to Cosmic dust\)$/, '（解锁新结构，并使宇宙尘埃获得 $1 倍增益）'],
+        [/^Unlocks (.+?) more Element (.+?) \(\+1 for every self-made Multiverse\)\.$/, '解锁 $1 个更多元素$2（每个自产多元宇宙 +1）。'],
+        [/^Unlocks (.+?) more Element (.+?) \(\+1 for every (.+?)\)\.$/, '解锁 $1 个更多元素$2（每$3 +1）。'],
+        [/^Small bodies will spontaneously concentrate into clumps\.$/, '小天体会自发聚集成团块。'],
+        [/^Molecules will produce Molecules, at a reduced rate\.$/, '分子会以较慢的速度生产分子。'],
+        [/^\(Self-made Planetesimals will boost each other by (.+)\)$/, '（自产微行星彼此提供 $1 倍增益）'],
+        [/^Make self-made Structures boost themselves by (.+)\.$/, '使自产结构彼此提供 $1 倍增益。'],
+        [/^from Cosmic dust will be greatly increased by (.+)\.$/, '来自宇宙尘埃的获取大幅提高 $1 倍。'],
+        [/^Spreads water too fast\. 1 extra Sea per Ocean\.$/, '水扩散过快。每个大洋额外 1 片海。'],
+        [/^\(Cosmic dust strength will be increased by (.+)\)$/, '（宇宙尘埃强度将提高 $1 倍）'],
+        [/^Puddles will get a boost based on Moles \^ (.+)\.$/, '水坑会根据摩尔数量获得增益 ^$1。'],
+        [/^Puddles will get a boost based on Drops \^ (.+)\.$/, '水坑会根据水滴数量获得增益 ^$1。'],
+        [/^It will also improve Oceans effect scaling\.$/, '还会改善大洋效果的缩放。'],
+        [/^Melt the core to increase Accretion speed\.$/, '熔化核心以加快吸积速度。'],
+        [/^Boost per Galaxy will be increased by \+ (.+)\.$/, '每个星系的增益提高 +$1。'],
+    ];
+    var known = {};
+    cnRegReplace.forEach(function (v, k) { known[k.source] = 1; });
+    for (var i = 0; i < _u.length; i++) if (!known[_u[i][0].source]) cnRegReplace.set(_u[i][0], _u[i][1]);
+})();
+/* ---- 结构名词条 ---- */
+(function () {
+    var _n = {
+        "Quark stars": "夸克星",
+        "Mesons": "介子",
+        "Gravitons": "引力子",
+        "Quasiparticles": "准粒子",
+        "Virtual particles": "虚拟粒子",
+        "Quantum foam": "量子泡沫",
+        "Remnants": "残骸",
+        "Planets": "行星",
+        "Nebula": "星云",
+        "Star cluster": "星团",
+        "Star": "恒星",
+        "Giant": "巨星",
+        "Dust": "尘埃"
+    };
+    for (var k in _n) if (!Object.prototype.hasOwnProperty.call(cnItems, k)) cnItems[k] = _n[k];
+})();
+
+/* ==== 研究描述补全(2) ==== */
+(function () {
+    var _data = [["^More of the same Star type will be found within Star cluster[.] Star clusters will be improved by (.+?)[.] It will also boost Stars of lower tier, but (.+?) times less than the previous one[.]$","星团内会出现更多同类型的恒星。星团效果提升 $1。也会增益低阶恒星，但比上一阶少 $2 倍。"],["^Higher density of Nebulas will allow them to produce Stars of higher tier, but each tier is (.+?) times slower than the previous one[.] It will also boost Nebulas by (.+?)[.]$","星云密度提高后可生产更高阶的恒星，但每一阶比上一阶慢 $1 倍。同时使星云提升 $2 倍。"],["^Planetesimals will attract other bodies and get a boost to their own production based on unspent Mass ^(.+?)[.]$","微行星会吸引其他天体，并根据未花费的质量获得自身产量增益 ^$1。"],["^Increase the Energy (.+?) required for Star clusters to cease being in a gravitationally bound state[.]$","提高星团脱离引力束缚所需的$1能量。"],["^Make self-made (.+?) boost each other by 1 [+] (.+?) [*] level and scale in cost slower by - (.+?) [*] level[.]$","使自产$1彼此提供 1 + $2 × 等级 的增益，且成本缩放减慢 -$3 × 等级。"],["^From Planetesimals to Planets, will get (.+?)x boost to Interstellar Stars with every level[.]$","从微行星到行星，每级使星际星球获得 $1 倍增益。"],["^Weaken internal gas pressure within Nebulas to cause even more gravitational Collapses[.]$","削弱星云内部的气体压力，引发更多引力坍缩。"],["^Instead of shattering, some Planetesimals will form a contact binary or even trinary[.]$","部分微行星不会碎裂，而会形成双星甚至三星系统。"],["^An immensely energetic explosion that will boost Interstellar Stars by (.+?)[.]$","一次能量极其巨大的爆发，使星际星球提升 $1 倍。"],["^[(]Creating this Research will make the next Discharge goal to be (.+?) Energy[)]$","（创建此研究后，下一个放能目标为 $1 能量）"],["^Boost production of (.+?) by (.+?) for the first (.+?) levels and by (.+?) for the rest[.]$","使$1的产量提升 $2（前 $3 级）与 $4（之后）。"],["^[(]First time reaching levels 6, 10, 12 and 20 also unlocks something new[)]$","（首次达到 6、10、12、20 级时还会解锁新内容）"],["^Discharge production boost from reached Goals will be increased by [+]?(.+?)[.]$","已达成目标提供的放能产量增益提高 +$1。"],["^This will make every self-made Star cluster boost each other by (.+?) ⟶ (.+?)[.]$","使每个自产星团彼此提供的增益变为 $1 ⟶ $2。"],["^When shattered, Planetesimals will replenish small grains quantity[.]$","微行星碎裂时会补充小颗粒数量。"],["^Slow encounter velocities will result in a more efficient growth[.]$","较低的相遇速度会带来更高效的增长。"],["^This will make every self-made Nebula boost each other by (.+?) ⟶ (.+?)[.]$","使每个自产星云彼此提供的增益变为 $1 ⟶ $2。"],["^[(]Total boost from 'Planetary system' will be increased by (.+?)[)]$","（“行星系统”的总增益将提高 $1）"],["^'Streaming instability' effect will be increased by [+](.+?)[.]$","“流动不稳定性”的效果提高 +$1。"],["^Have more (.+?) energy by increasing its gain by 1 [+] level[.]$","提高$1能量的获取，使其增益为 1 + 等级。"],["^Improve 'Pebble accretion' Accretion speed even more[.]$","进一步改善“卵石吸积”的吸积速度。"],["^Discharge goals will be able to boost 'Tritium'[.]$","放能目标将能增益“氚”。"],["^[(]Effect will be stronger with more Black holes[)]$","（黑洞越多，效果越强）"],["^All self-made Stars will boost each other by (.+?)[.]$","所有自产恒星彼此提供 $1 倍增益。"],["^Next tier will be (.+?)[.] Currently can produce: (.+?)[.]$","下一阶为 $1。目前可生产：$2。"],["^Next tier will be (.+?)[.] Currently can boost: (.+?)[.]$","下一阶为 $1。目前可增益：$2。"],["^'Surface tension' base will be [+](.+?) stronger[.]$","“表面张力”的基础增益 +$1。"],["^'Surface stress' base will be [+](.+?) stronger[.]$","“表面应力”的基础增益 +$1。"],["^(.+?) from Cosmic dust will be increased by (.+?)[.]$","$1 从宇宙尘埃的获取提高 $2 倍。"],["^(.+?) from Cosmic dust will increased by (.+?)[.]$","$1 从宇宙尘埃的获取提高 $2 倍。"],["^'Magma Ocean' will become stronger, by (.+?)[.]$","“岩浆海洋”效果增强 $1。"],["^[(]This is equal to (.+?)x boost improvement[)]$","（相当于 $1 倍的增益提升）"],["^[(]Boost: (.+?) ⟶ (.+?), weaker after (.+?) Mass[)]$","（增益：$1 ⟶ $2，超过 $3 质量后减弱）"],["^Also delays (.+?) softcap by 1 [+] level[.]$","同时使$1的软上限延迟 1 + 等级。"],["^[(]Current effect: (.+?) ^ level[)]$","（当前效果：$1 ^ 等级）"],["^[(]Total boost: (.+?) ⟶ (.+?)[)]$","（总增益：$1 ⟶ $2）"],["^[(]Total boost: (.+?)[)]$","（总增益：$1）"],["^Super dense core which will allow creation of a new Structure[.] That Structure will increase Stage reset reward, boost Nebulas and Star clusters[.] But creating it will fully reset (.+?) Stages[.]$","超致密核心，可创建新结构。该结构会提升阶段重置奖励，并增益星云与星团。但创建它会彻底重置$1阶段。"],["^High density of Drops will end up boosting Nebulas with 'Surface tension'[.] Also with 'Surface stress' ^(.+?) at level 2, full power at level 3[.]$","水滴密度足够高时，会通过“表面张力”增益星云。2 级时还会获得“表面应力” ^$1，3 级时达到全效。"],["^This will add a new effect to Neutron stars ‒ Interstellar Stars are cheaper, and will also increase max level of 'Star system' by [+]1[.]$","为中子星增加新效果 ‒ 星际星球更便宜，并使“恒星系统”最大等级 +1。"],["^Submerge and boost Interstellar Stars with 'Surface tension'[.] Also with 'Surface stress' ^(.+?) at level 2, full power at level 3[.]$","通过“表面张力”湮没并增益星际星球。2 级时还会获得“表面应力” ^$1，3 级时达到全效。"],["^Some Clouds will start pouring Drops themselves[.] This will boost Puddles, even if there are none, based on current Clouds[.]$","部分云会自行倾泻水滴。这会根据当前云量增益水坑，即使一个水坑都没有。"],["^All Structures produce Energy on creation and all resets affect all lower Stages, while also doing Discharge reset[.]$","所有结构在创建时都会产生能量，所有重置都会影响所有较低阶段，同时执行放能重置。"],["^Discharge goals will be able to boost Interstellar Stars[.] Their strength is based on Energy and Discharge base[.]$","放能目标将能增益星际星球。其强度取决于能量与放能基础。"],["^This Research also removes Solar mass and other Remnant requirements from everything in the Interstellar Stage[.]$","此研究还会移除星际阶段所有内容的太阳质量与其他残骸需求。"],["^Mesons will be able to bind Particles to form Atoms, which will make Atoms to be affected by 'Strong force'[.]$","介子将能结合粒子形成原子，使原子受“强力”影响。"],["^Buff Universes with (.+?) softcap delays ^[(]level [/] 40[)] by improving the ratio of kinetic and potential (.+?) energy[.]$","通过改善动能与势能的比例，使宇宙获得$1软上限延迟 ^（等级 / 40）。"],["^Improved by 'Star system' levels, but also improves their scaling [(]effect increase for 'Star system' is (.+?)[)][.]$","受“恒星系统”等级提升，同时也会改善其缩放（“恒星系统”的效果提升为 $1）。"],["^This violent stellar explosion is the main source of Elements, but also starts the formation of new Stars[.]$","这场剧烈的恒星爆炸是元素的主要来源，同时也开启新恒星的形成。"],["^Star material will transfer from one Star to another, improving Solar mass gain by (.+?) in the process[.]$","恒星物质会在恒星之间转移，过程中使太阳质量获取提高 $1。"],["^An even bigger Galaxy to improve Stage reset reward and Galaxy groups effect with every Galaxy group[.]$","更大的星系，每个星系群都会提升阶段重置奖励与星系群效果。"],["^Second level will redirect delay to the hardcap as a boost to Cosmic dust that ignores softcap[.]$","第二级会把延迟作用于硬上限，转为无视软上限的宇宙尘埃增益。"],["^Increase (.+?) fluid gain by [+]^(.+?) and starting effective (.+?) energy by [+] (.+?) fluid effect [*] level [/] 4[.]$","使$1流体获取提高 +^$2，初始有效$3能量提高 + $4 × 流体效果 × 等级 / 4。"],["^Increases how many levels of '(.+?)' boost production by (.+?) instead of (.+?) and max level by [+]1[.]$","使“$1”有多少等级提供 $2 倍产量（而非 $3），并使最大等级 +1。"],["^Increase strength of Cosmic dust by another (.+?) per level[.] Max level is based on Rank[.]$","每级使宇宙尘埃强度再提高 $1。最大等级取决于等阶。"],["^Improve effect of '[(](.+?)[)] (.+?)' by [+](.+?) and increase max level of 'Star system' by [+]1[.]$","使“[$1] $2”效果提高 +$3，并使“恒星系统”最大等级 +1。"],["^Make 'Rain Clouds' boost Seas and their own pre-Puddles effect, at a reduced rate[.]$","使“雨云”以较低效率增益大海及其自身的水坑前效果。"],["^Protect your Mass from being removed by removing Cosmic dust hardcap instead[.]$","保护你的质量不被移除，改为移除宇宙尘埃硬上限。"],["^After matter were dispeled from Red giant, White dwarf was all that remained[.]$","红巨星的物质被抛散后，只剩下白矮星。"],["^As Neutron stars spin down, some of them may get converted into Quark stars[.]$","中子星自转减慢后，部分会转化为夸克星。"],["^Decrease amount of Galaxies required for the creation of a Galaxy Group[.]$","降低创建星系群所需的星系数量。"],["^Unlock a new Star type and even more, after Collapse of that Star type[.]$","解锁新的恒星类型；该恒星类型坍缩后还能解锁更多内容。"],["^First level is to begin the Accretion, second level is to Submerge it[.]$","第一级开始吸积，第二级将其湮没。"],["^(.+?) from Cosmic dust will be even bigger, current formula is (.+?) ^ Rank[.]$","$1 从宇宙尘埃的获取会更多，当前公式为 $2 ^ 等阶。"],["^Accretion Mass is Microworld Mass [*] (.+?) and Moles are Molecules [/] (.+?)[.]$","吸积质量 = 微观世界质量 × $1，摩尔 = 分子 / $2。"],["^[(]Will require at least (.+?) Solar mass to create that new Star type[)]$","（创建该新恒星类型至少需要 $1 太阳质量）"],["^Submerge quicker by boosting Puddles, effect is based on Rank[.]$","通过增益水坑加快湮没，效果取决于等阶。"],["^Effective level is (.+?), will be (.+?) affect Stage reset reward[.]$","有效等级为 $1，将$2影响阶段重置奖励。"],["^Delay 'Global boost' Inflation softcap by [(]1 [+] level[)] ^2[.]$","使“全局增益”膨胀的软上限延迟（1 + 等级）^2。"],["^Boost Preons and delay hardcap by current Energy ^(.+?)[.]$","根据当前能量 ^$1 增益前子并延迟硬上限。"],["^Delay (.+?) softcap by current (.+?) energy ^[(]level [/] 5[)][.]$","根据当前$2能量 ^（等级 / 5）延迟$1软上限。"],["^Also increase max level of 'Acceleration' by [+]2[.]$","同时使“加速”的最大等级 +2。"],["^Effective level (.+?) affect pre-Puddles boost[.]$","有效等级$1影响水坑前增益。"],["^Improve 'Impulse' base strength even more[.]$","进一步改善“脉冲”的基础强度。"],["^[(]Effect: (.+?) ⟶ (.+?), weaker after (.+?) Clouds[)]$","（效果：$1 ⟶ $2，超过 $3 云量后减弱）"],["^[(]This will increase total boost by (.+?)[)]$","（这将使总增益提高 $1）"],["^Current base is (.+?), total boost is (.+?)[.]$","当前基础为 $1，总增益为 $2。"],["^[(]Atoms will be (.+?) times cheaper[)]$","（原子将便宜 $1 倍）"],["^Unlock the second Merge result[.]$","解锁第二个合并结果。"],["^[(]Current hardcap delay is (.+?)[)]$","（当前硬上限延迟为 $1）"],["^[(]Current effect: (.+?) ⟶ (.+?)[)]$","（当前效果：$1 ⟶ $2）"],["^[(]Boost to Nebulas: (.+?)[)]$","（对星云的增益：$1）"],["^[(]Current boost: (.+?) ⟶ (.+?)[)]$","（当前增益：$1 ⟶ $2）"],["^[(]Current delay: (.+?) ⟶ (.+?)[)]$","（当前延迟：$1 ⟶ $2）"],["^[(]Boost to Stars: (.+?)[)]$","（对恒星的增益：$1）"],["^[(]Total increase: (.+?)[)]$","（总提升：$1）"],["^[(]Boost: (.+?) ⟶ (.+?)[)]$","（增益：$1 ⟶ $2）"],["^[(]Always active[)]$","（始终生效）"],["^[(]Effect: (.+?) ⟶ (.+?)[)]$","（效果：$1 ⟶ $2）"],["^[(]Effect: (.+?)[)]$","（效果：$1）"]];
+    for (var i = 0; i < _data.length; i++) {
+        try {
+            var re = new RegExp(_data[i][0]);
+            var dup = false;
+            cnRegReplace.forEach(function (v, k) { if (k.source === _data[i][0]) dup = true; });
+            if (!dup) cnRegReplace.set(re, _data[i][1]);
+        } catch (e) {}
+    }
+    var _n = {"Acceleration":"加速","Megatsunami":"巨型海啸","Composition":"组成","Quintessence":"精华","Expansion":"膨胀","Stability":"稳定"};
+    for (var k in _n) if (!Object.prototype.hasOwnProperty.call(cnItems, k)) cnItems[k] = _n[k];
+})();
+
+/* ==== 奇异/挑战收尾 ==== */
+(function () {
+    var _data = [["^Second level will disable auto Accretion Structures while Cosmic dust is hardcapped and don't have enough Mass for the highest Solar mass conversion(.*)[.]$","第二级会在宇宙尘埃达到硬上限且质量不足以进行最高太阳质量转换时禁用自动吸积结构$1。"],["^[(]Also unlocks permanent auto Galaxies and removes Solar mass limit for auto Collapse points[)]$","（同时解锁永久自动星系，并移除自动坍缩点的太阳质量限制）"],["^Submerged Structures that improve other Submerged Structures will do it (.+?) times stronger[.]$","湮没结构对其他湮没结构的改进效果提升 $1 倍。"],["^Accretion Structures that produce other Accretion Structures will do it (.+?) times faster[.]$","生产其他吸积结构的吸积结构，其生产速度提升 $1 倍。"],["^Final level will instead unlock an even better new Upgrade ‒ '?(.+?)'? that costs (.+?) (.+?)[.]$","最后一级改为解锁更好的新升级 ‒ “$1”（花费 $2 $3）。"],["^Final level will instead unlock a new Upgrade ‒ '?(.+?)'? that costs (.+?) (.+?)[.]$","最后一级改为解锁新升级 ‒ “$1”（花费 $2 $3）。"],["^Automatically Collapse if able to afford a new Galaxy and auto Galaxy is enabled[.]$","若能负担新星系且自动星系已启用，则自动坍缩。"],["^(.+?) Strange quarks will boost Accretion by reducing cost of its Structures(.*)[.]$","$1奇异夸克会通过降低吸积结构成本来增益吸积$2。"],["^(.+?) Strange quarks will boost Intergalactic by increasing Solar mass gain(.*)[.]$","$1奇异夸克会通过提高太阳质量获取来增益星系际$2。"],["^(.+?) Strange quarks will boost Interstellar by improving its Structures(.*)[.]$","$1奇异夸克会通过改进星际结构来增益星际$2。"],["^(.+?) Strange quarks will boost Microworld by improving its Structures(.*)[.]$","$1奇异夸克会通过改进微观世界结构来增益微观世界$2。"],["^(.+?) Strange quarks will boost Submerged by improving Puddles(.*)[.]$","$1奇异夸克会通过改进水坑来增益湮没$2。"],["^Automatically trigger Stage reset(.*)[.] [(]Needs to be enabled in Settings[)]$","自动触发阶段重置$1。（需在设置中启用）"],["^Increase max levels for a lot of Strangeness, these include:$","提高大量奇异升级的最大等级，包括："],["^Elements will no longer require Collapse for activation(.*)[.]$","元素不再需要坍缩即可激活$1。"],["^[(]Affected Structures are Planetesimals and Protoplanets[)]$","（受影响结构：微行星与原行星）"],["^[(]Affected Structures are Ponds, Lakes, Seas and Oceans[)]$","（受影响结构：池塘、湖泊、大海与大洋）"],["^Make auto for (.+?) Intergalactic Structures permanent(.*)[.]$","使前 $1 个星系际结构的自动化永久生效$2。"],["^[(]Click on that Structure to see its effects[)]$","（点击该结构可查看其效果）"],["^No Mass will be lost when creating Preons(.*)[.]$","创建前子时不会损失质量$1。"],["^(.+?) can be found at the 'Advanced' subtab[.]$","$1可在“高级”子标签中找到。"],["^Unlock another Strange Structure[.]$","解锁另一个奇异结构。"],["^Drops will (.+?) (.+?) times more(.*)[.]$","水滴将 $2 倍$3。"],["^[(]Formula: Strange quarks ^(.+?) ⟶ ^(.+?) with '[(]26[)] Iron' [|] Effect: (.+?)[)](.*)$","（公式：奇异夸克 ^$1 ⟶ ^$2（含“[26] 铁”）| 效果：$3）$4"],["^[(]Formula: Strange quarks ^(.+?) [|] Effect: (.+?)[)](.*)$","（公式：奇异夸克 ^$1 | 效果：$2）$3"],["^Second level will make 'Natural Vaporization' Cloud Research old effect always active and add new effect to unlock (.+?)% > 10% passive Clouds gain over 5 levels, 10 times stronger with 'Automatic Vaporization' level 2, this level will also slightly improve Submersion formula[.]$","第二级将使“自然汽化”云研究的旧效果始终生效，并新增效果：在 5 级内解锁 $1% > 10% 的被动云获取；“自动汽化”2 级时效果强 10 倍，本级还会略微改进湮没公式。"],["^Third level will slightly improve strength of the following Strangeness: 'Better improvement', 'More Moles', 'Bigger Puddles', 'Improved flow', will also make Void increase max level for the first two and finally add new Upgrade for 'Galactic tide' level 2[.]$","第三级会略微增强以下奇异升级：“更好的改进”“更多摩尔”“更大的水坑”“更好的流动”，还会让虚空提高前两项的最大等级，最后为“星系潮汐”2 级增加新升级。"],["^Final level will make most of Submerged [(]not Moles[)] immune to pre-Stage resets, Vaporization will only reset Microworld and Submerged Stages[.]$","最后一级会使多数湮没（不含摩尔）免疫阶段前重置，汽化只会重置微观世界与湮没阶段。"],["^True Vacuum only, make 'Ocean world' Strangeness old effect always active and add new effect to improve related formula[.]$","仅限真真空：使“海洋世界”奇异升级的旧效果始终生效，并新增效果改进相关公式。"],["^Keep more of (.+?) Resources by making related Structures(.*?) not spend them on creation[.]$","让相关结构在创建时不再消耗资源，从而保留更多$1资源$2。"],["^[(]Boost per level: (.+?), softcaps after (.+?) (.+?)[.] Global speed doesn't speed up game ticks[)]$","（每级增益：$1，软上限为 $2 $3。全局速度不会加快游戏 tick）"],["^Boost global speed by (.+?), but reduce time limit for (.+?) by (.+?), if level is below 2[.]$","使全局速度提升 $1 倍，但若等级低于 2，则将$2的时间限制降低 $3 倍。"],["^Increase Export storage by [+](.+?)%(.*?) of the Stage reset value after any Stage reset[.]$","任何阶段重置后，导出存储量提高阶段重置值的 +$1%$2。"],["^For false Vacuum it will remove time limit from Milestones(.*)[.]$","对假真空而言，将移除里程碑的时间限制$1。"],["^If (.+?), then 2nd level will instead boost global speed by (.+?)[.]$","若$1，则第 2 级改为使全局速度提升 $2 倍。"],["^Have (.+?) Stars (.+?) reach at least (.+?)[.]$","让 $1 个恒星$2至少达到 $3。"],["^Reach 'SV [+]([0-9]+)' [(](.+?)[)] Rank[.]$","达到“超级虚空 +$1”等阶（$2）。"],["^Have (.+?) reach (.+?) or more[.]$","让 $1 达到 $2 或更多。"],["^(.+?) at least (.+?) (.+?)[.]$","$1至少 $2 $3。"],["^([0-9]+) Completions$","完成 $1 次"],["^[(]Entering will force a Quantum reset, will be reverted after exiting[)]$","（进入会强制量子重置，退出后恢复）"],["^[(]Remove boost decay and make it always work in false Vacuum[)]$","（移除增益衰减，使其在假真空中始终生效）"],["^[(]Requires 'Darkness' Strangeness to activate all effects[)]$","（需要“黑暗”奇异升级才能激活所有效果）"],["^Expansion for the Abyss Stage through (.+?) Upgrades$","通过$1升级扩展深渊阶段"],["^Make 'Instability' Inflation immune to resets$","使“不稳定性”膨胀免疫重置"],["^Vacuum state with the lowest possible Energy$","能量尽可能低的真空状态"],["^Improve level 2 of 'Overboost' Inflation$","改进“超提升”膨胀的 2 级"],["^Reach 'Protogalaxy [+]([0-9]+)' Rank$","达到“原星系 +$1”等阶"],["^Darkness Tier ([0-9]+) [(]WIP[)]$","黑暗第 $1 阶（开发中）"]];
+    for (var i = 0; i < _data.length; i++) {
+        try {
+            var dup = false;
+            cnRegReplace.forEach(function (v, k) { if (k.source === _data[i][0]) dup = true; });
+            if (!dup) cnRegReplace.set(new RegExp(_data[i][0]), _data[i][1]);
+        } catch (e) {}
+    }
+    var _n = {"More Strange quarks":"更多奇异夸克","More Strangelets":"更多奇异粒子","More Cosmons":"更多宇宙子","More global speed":"更多全局速度","Instability":"不稳定性","Conversion":"转化","Overboost":"超提升","Neutronium":"中子素","Better improvement":"更好的改进","Bigger Puddles":"更大的水坑","Improved flow":"更好的流动","Faster Accretion":"更快的吸积","Intense weathering":"强烈的风化","Hotter Stars":"更热的恒星","Cheaper Stars":"更便宜的恒星","Bigger Structures":"更大的结构","Free Discharge":"免费放能","More Moles":"更多摩尔","Fundamental boost":"基础增益","Natural Vaporization":"自然汽化","Automatic Vaporization":"自动汽化","Ocean world":"海洋世界","Darkness":"黑暗","Galactic tide":"星系潮汐"};
+    for (var k in _n) if (!Object.prototype.hasOwnProperty.call(cnItems, k)) cnItems[k] = _n[k];
+})();
+
+/* ==== 元素描述补全 ==== */
+(function () {
+    var _data = [["^Does not need to be prepared to increase Stage reset reward base with arithmetic progression of '[(]26[)] Iron' effect and a Step of (.+?)[.]$","无需准备即可用“[26] 铁”效果的等差序列提高阶段重置奖励基础，步长为 $1。"],["^A new color and a new additive boost to the base of Solar mass gain base (.+?) that is based on self-made Brown dwarfs[.]$","带来新的颜色，并基于自产棕矮星为太阳质量获取基础提供新的加算增益$1。"],["^First of new Elements to come, increases max allowed Merge resets by [+]([0-9]+) for every new Element past '[(]29[)] Copper'[.]$","新元素中的第一个：每多一种超过“[29] 铜”的新元素，允许的最大合并重置 +$1。"],["^[(]Currently highest created Element in the current Stage reset is '(.+?)', equals to [+](.+?) allowed Merges[)]$","（当前阶段重置中已创建的最高元素为“$1”，相当于 +$2 次允许合并）"],["^Catalyst for production of Stardust[.] 'Gamma-ray burst' effect will be increased by Solar mass ^(.+?)[.]$","星尘生产的催化剂。“伽马射线暴”效果按太阳质量 ^$1 提高。"],["^Stars are inside you, as well Neutron stars will improve themselves by log4 of their own amount[.]$","恒星就在你体内；中子星会按自身数量的 log4 提升自身。"],["^One of the fundamentals for Life and to make all self-made Stars to boost Solar mass gain(.*)[.]$","生命的基石之一，并使所有自产恒星增益太阳质量获取$1。"],["^Just another tetravalent metalloid, and so is another (.+?)x boost to Interstellar Stars(.*?)[.]$","又一种四价类金属，为星际星球再提供 $1 倍增益$2。"],["^No corrosion, only boost to Interstellar Stars that is based on unspent Stardust ^(.+?)[.]$","不会腐蚀，只会根据未花费的星尘为星际星球提供增益 ^$1。"],["^First metal, base for Solar mass gain(.*?) from Brown dwarfs will be lightly increased[.]$","第一种金属，棕矮星的太阳质量获取基础会略微提高$1。"],["^Brittle earth metal and so is the brittle increase to the production[.]$","脆性的碱土金属，产量提升也同样脆弱。"],["^Slow to react, but it will increase effective amount of Red giants(.*?)[.]$","反应缓慢，但会提高红巨星的有效数量$1。"],["^Combined and ready to make Red giants effect improve Brown dwarfs[.]$","已结合就绪，使红巨星的效果能够改进棕矮星。"],["^The most basic Element, increases Brown dwarfs(.*?) production by (.+?)[.]$","最基本的元素，使棕矮星产量提高 $2 倍$1。"],["^Oh, and it also will increase max level of 'Star system' by [+]([0-9]+)[.]$","哦，还会使“恒星系统”的最大等级 +$1。"],["^[(]Additive, boost is equal to (.+?)x when nothing else boosting it[)]$","（加算；无其他增益时增益等于 $1 倍）"],["^Also improves '[(](.+?)[)] (.+?)' Element by [+][^](.+?)[.]$","还会使“[$1] $2”元素效果提高 +^$3。"],["^A noble (.+?)x boost to the Solar mass gain(.*?)[.]$","一种稀有气体，为太阳质量获取提供 $1 倍增益$2。"],["^[(](.+?)x boost to Interstellar Stars(.*?)[)]$","（星际星球获得 $1 倍增益$2）"],["^[(]Effect increase: (.+?)[)]$","（效果提升：$1）"],["^[(](.+?) Always active[)]$","（$1 始终生效）"]];
+    for (var i = 0; i < _data.length; i++) {
+        try {
+            var dup = false;
+            cnRegReplace.forEach(function (v, k) { if (k.source === _data[i][0]) dup = true; });
+            if (!dup) cnRegReplace.set(new RegExp(_data[i][0]), _data[i][1]);
+        } catch (e) {}
+    }
+    var _n = {"Rubidium":"铷","Strontium":"锶","Yttrium":"钇","Zirconium":"锆","Niobium":"铌","Molybdenum":"钼","Technetium":"锝","Ruthenium":"钌","Rhodium":"铑","Palladium":"钯","Silver":"银","Cadmium":"镉"};
+    for (var k in _n) if (!Object.prototype.hasOwnProperty.call(cnItems, k)) cnItems[k] = _n[k];
+})();
+
+/* ==== ^ 转义修正 ==== */
+(function () {
+    var _data = [["^Planetesimals will attract other bodies and get a boost to their own production based on unspent Mass \\^(.+?)[.]$","微行星会吸引其他天体，并根据未花费的质量获得自身产量增益 ^$1。"],["^[(]Current effect: (.+?) \\^ level[)]$","（当前效果：$1 ^ 等级）"],["^Boost Preons and delay hardcap by current Energy \\^(.+?)[.]$","根据当前能量 ^$1 增益前子并延迟硬上限。"],["^Delay (.+?) softcap by current (.+?) energy \\^[(]level [/] 5[)][.]$","根据当前$2能量 ^（等级 / 5）延迟$1软上限。"],["^Delay 'Global boost' Inflation softcap by [(]1 [+] level[)] \\^2[.]$","使“全局增益”膨胀的软上限延迟（1 + 等级）^2。"],["^Increase (.+?) fluid gain by [+]\\^(.+?) and starting effective (.+?) energy by [+] (.+?) fluid effect [*] level [/] 4[.]$","使$1流体获取提高 +^$2，初始有效$3能量提高 + $4 × 流体效果 × 等级 / 4。"],["^Also improves '[(](.+?)[)] (.+?)' Element by [+]\\^(.+?)[.]$","还会使“[$1] $2”元素效果提高 +^$3。"],["^No corrosion, only boost to Interstellar Stars that is based on unspent Stardust \\^(.+?)[.]$","不会腐蚀，只会根据未花费的星尘为星际星球提供增益 ^$1。"],["^High density of Drops will end up boosting Nebulas with 'Surface tension'[.] Also with 'Surface stress' \\^(.+?) at level 2, full power at level 3[.]$","水滴密度足够高时，会通过“表面张力”增益星云。2 级时还会获得“表面应力” ^$1，3 级时达到全效。"],["^Submerge and boost Interstellar Stars with 'Surface tension'[.] Also with 'Surface stress' \\^(.+?) at level 2, full power at level 3[.]$","通过“表面张力”湮没并增益星际星球。2 级时还会获得“表面应力” ^$1，3 级时达到全效。"],["^Puddles will get a boost based on Moles \\^(.+?)[.]$","水坑会根据摩尔数量获得增益 ^$1。"],["^Puddles will get a boost based on Drops \\^(.+?)[.]$","水坑会根据水滴数量获得增益 ^$1。"],["^Spread water faster with every Puddle, current formula is (.+?) \\^ (.+?) effective Puddles[.]$","每个水坑都能加快水的扩散，当前公式为 $1 ^ $2 个有效水坑。"],["^Allow for Star clusters to be boosted by [(]'Gravity' [/] (.+?)[)] \\^ (.+?) [+] 1[.]$","让星团获得增益：（“重力”/ $1）^ $2 + 1。"],["^[(]Formula: Strange quarks \\^(.+?) [|] Effect: (.+?)[)](.*)$","（公式：奇异夸克 ^$1 | 效果：$2）$3"],["^[(]Formula: Strange quarks \\^(.+?) ⟶ \\^(.+?) with '[(]26[)] Iron' [|] Effect: (.+?)[)](.*)$","（公式：奇异夸克 ^$1 ⟶ ^$2（含“[26] 铁”）| 效果：$3）$4"],["^Increase the Energy (.*?) required for Star clusters to cease being in a gravitationally bound state[.]$","提高星团脱离引力束缚所需的能量$1。"],["^Make self-made (.+?) boost each other by 1 [+] (.+?) [*] level and scale in cost slower by - (.+?) [*] level[.]$","使自产$1彼此提供 1 + $2 × 等级 的增益，且成本缩放减慢 -$3 × 等级。"]];
+    function word(w) {
+        if (!w) return w;
+        if (Object.prototype.hasOwnProperty.call(cnItems, w) && typeof cnItems[w] === 'string') return cnItems[w];
+        var d = cnItems[w + '.'];
+        if (typeof d === 'string') return d.replace(/。$/, '');
+        return w;
+    }
+    for (var i = 0; i < _data.length; i++) {
+        try { cnRegReplace.set(new RegExp(_data[i][0]), _data[i][1]); } catch (e) {}
+    }
+    // 名字列表型：Make self-made X ... 与 Drops will X Y times more
+    cnRegReplace.set(/^Make self-made (.+?) boost each other by 1 [+] (.+?) [*] level and scale in cost slower by - (.+?) [*] level[.]$/,
+        function (m, a, b, c) { return '使自产' + word(a) + '彼此提供 1 + ' + b + ' × 等级 的增益，且成本缩放减慢 -' + c + ' × 等级。'; });
+    cnRegReplace.set(/^Drops will (.+?) (.+?) times more(.*)[.]$/,
+        function (m, a, b, c) { return '水滴将 ' + b + ' 倍' + c + '。'; });
+})();
+
+/* ---- 收尾修正 2 ---- */
+(function () {
+    // 让函数版规则优先：删掉早先的字符串版
+    var kill = [];
+    cnRegReplace.forEach(function (v, k) {
+        if (typeof v === 'string' && /^\^Make self-made/.test(k.source)) kill.push(k);
+        if (typeof v === 'string' && /^\^Increase the Energy \(\.\+\?\) required/.test(k.source)) kill.push(k);
+    });
+    kill.forEach(function (k) { cnRegReplace.delete(k); });
+    cnRegReplace.set(/^Make self-made (.+?) boost each other by 1 [+] (.+?) [*] level and scale in cost slower by - (.+?) [*] level[.]$/,
+        function (m, a, b, c) {
+            var w = a;
+            if (Object.prototype.hasOwnProperty.call(cnItems, a) && typeof cnItems[a] === 'string') w = cnItems[a];
+            else if (typeof cnItems[a + '.'] === 'string') w = cnItems[a + '.'].replace(/。$/, '');
+            return '使自产' + w + '彼此提供 1 + ' + b + ' × 等级 的增益，且成本缩放减慢 -' + c + ' × 等级。';
+        });
+    cnRegReplace.set(/^Increase the Energy(.*?)required for Star clusters to cease being in a gravitationally bound state[.]$/,
+        '提高星团脱离引力束缚所需的能量。');
+    if (!Object.prototype.hasOwnProperty.call(cnItems, 'Moles')) cnItems['Moles'] = '摩尔';
+})();
+
+/* ---- 收尾修正 3 ---- */
+(function () {
+    var kill = [];
+    cnRegReplace.forEach(function (v, k) { if (typeof v === 'function' && /^\^Drops will \(\.\+\?\) \(\.\+\?\) times more/.test(k.source)) kill.push(k); });
+    kill.forEach(function (k) { cnRegReplace.delete(k); });
+    cnRegReplace.set(/^Drops will (.+?) (.+?) times more(.*)[.]$/, function (m, a, b, c) {
+        var w = a;
+        if (Object.prototype.hasOwnProperty.call(cnItems, a) && typeof cnItems[a] === 'string') w = cnItems[a];
+        else if (typeof cnItems[a + '.'] === 'string') w = cnItems[a + '.'].replace(/。$/, '');
+        return '水滴将产出 ' + b + ' 倍的' + w + c + '。';
+    });
+})();
+
+/* ---- 收尾修正 4 ---- */
+(function () {
+    var kill = [];
+    cnRegReplace.forEach(function (v, k) { if (/Drops will .+ times more/.test(k.source)) kill.push(k); });
+    kill.forEach(function (k) { cnRegReplace.delete(k); });
+    cnRegReplace.set(/^Drops will (.+?) (.+?) times more(.*)[.]$/, function (m, a, b, c) {
+        var w = a;
+        if (Object.prototype.hasOwnProperty.call(cnItems, a) && typeof cnItems[a] === 'string') w = cnItems[a];
+        else if (typeof cnItems[a + '.'] === 'string') w = cnItems[a + '.'].replace(/。$/, '');
+        return '水滴将产出 ' + b + ' 倍的' + w + c + '。';
+    });
+})();
+
+/* ---- 收尾修正 5 ---- */
+(function () {
+    var kill = [];
+    cnRegReplace.forEach(function (v, k) { if (/Drops will .+ times more/.test(k.source)) kill.push(k); });
+    kill.forEach(function (k) { cnRegReplace.delete(k); });
+    function word(w) {
+        if (!w) return w;
+        if (Object.prototype.hasOwnProperty.call(cnItems, w) && typeof cnItems[w] === 'string') return cnItems[w];
+        var d = cnItems[w + '.'];
+        if (typeof d === 'string') return d.replace(/。$/, '');
+        return w;
+    }
+    cnRegReplace.set(/^Drops will (.+?) ([0-9.,]+) times more(.*)[.]$/, function (m, a, b, c) {
+        return '水滴将使' + word(a) + '的产出提高 ' + b + ' 倍' + c + '。';
+    });
+})();
+
+/* ---- 收尾修正 6 ---- */
+(function () {
+    var kill = [];
+    cnRegReplace.forEach(function (v, k) { if (/Drops will .+ times more/.test(k.source)) kill.push(k); });
+    kill.forEach(function (k) { cnRegReplace.delete(k); });
+    function word(w) {
+        if (!w) return w;
+        if (Object.prototype.hasOwnProperty.call(cnItems, w) && typeof cnItems[w] === 'string') return cnItems[w];
+        var d = cnItems[w + '.'];
+        if (typeof d === 'string') return d.replace(/。$/, '');
+        return w;
+    }
+    cnRegReplace.set(/^Drops will (.+?) ([0-9.,]+) times more(.*)[.]$/, function (m, a, b, c) {
+        var obj = String(a).trim().split(/\s+/).pop();
+        return '水滴将使' + word(obj) + '的产出提高 ' + b + ' 倍' + c + '。';
+    });
+})();
