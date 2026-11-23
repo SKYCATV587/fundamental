@@ -247,6 +247,14 @@ function TransSubTextNode(node) {
 (function () {
     var baseCnItem = cnItem;
     var LATIN = /[A-Za-z]/;
+    // 仅当整段确实被翻译成中文时才算数：
+    // 否则像 " Cosmons" 这类后缀替换会让整段被误判为“已翻译”，从而跳过逐行汉化。
+    function translatedEnough(s) {
+        var cjk = s.match(/[\u4e00-\u9fff]/g);
+        if (!cjk || cjk.length < 2) return false;
+        var compact = s.replace(/\s+/g, '');
+        return cjk.length / Math.max(1, compact.length) >= 0.15;
+    }
     function transLine(line, node) {
         if (!line || !LATIN.test(line)) return line;
         var m = line.match(/^(\s*)([\s\S]*?)(\s*)$/);
@@ -259,7 +267,7 @@ function TransSubTextNode(node) {
         if (typeof text !== 'string') return text;
         var norm = text.indexOf('\r') === -1 ? text : text.replace(/\r\n/g, '\n');
         var whole = baseCnItem(norm, node);
-        if (whole !== norm) return whole;
+        if (whole !== norm && translatedEnough(whole)) return whole;
         if (norm.indexOf('\n') === -1) return whole;
         var lines = norm.split('\n');
         var changed = false;
