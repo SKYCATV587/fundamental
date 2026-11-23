@@ -6237,3 +6237,36 @@ var cnRegReplace = new Map([
     cnRegReplace.forEach(function (v, k) { known[k.source] = 1; });
     for (var i = 0; i < rules.length; i++) if (!known[rules[i][0].source]) cnRegReplace.set(rules[i][0], rules[i][1]);
 })();
+
+/* ================================================================
+ * 奇异升级效果：更新的升级 / 黑暗小阶段（物品名是动态拼进句子的）
+ * ================================================================ */
+(function () {
+    var NAMES = { 'Nucleosynthesis': '核合成', 'Quark-nova': '夸克新星', 'Inner Black hole': '内部黑洞' };
+    function word(s) {
+        if (NAMES[s]) { return NAMES[s]; }
+        if (typeof cnItems[s] === 'string') { return cnItems[s]; }
+        return s;
+    }
+    function items(s) {
+        return s.split(', ').map(function (x) {
+            var m = /^(Upgrade|Collapse Research|Stage Research) ‒ '(.+)'$/.exec(x.trim());
+            if (!m) { return x; }
+            var kind = m[1] === 'Upgrade' ? '升级' : (m[1] === 'Collapse Research' ? '坍缩研究' : '阶段研究');
+            return kind + ' ‒ “' + word(m[2]) + '”';
+        }).join('，');
+    }
+    var rules = [
+        [/^Unlock yet another an even better new Upgrade:\n(.+)\.$/, function (m, a) {
+            return '解锁又一个更好的新升级：\n' + items(a) + '。';
+        }],
+        [/^(.+?) can be found at the 'Advanced' subtab\.$/, function (m, a) {
+            return word(a) + '可在“高级”子选项卡中找到。';
+        }],
+        // 名字（如 Darkness）会先被前缀表翻译并剥离，这里匹配剩下的部分
+        [/^ ?can be found at the 'Advanced' subtab[.]$/, '可在“高级”子选项卡中找到。']
+    ];
+    var known = {};
+    cnRegReplace.forEach(function (v, k) { known[k.source] = 1; });
+    for (var i = 0; i < rules.length; i++) if (!known[rules[i][0].source]) cnRegReplace.set(rules[i][0], rules[i][1]);
+})();
