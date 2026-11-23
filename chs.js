@@ -305,7 +305,7 @@ var cnItems = {
     "Researches": "研究",
     "Resource.": "资源。",
     "Return back to Microworld if can get at least": "如果至少能得到，就返回微观世界",
-    "Reward:": "报酬：",
+    "Reward:": "奖励：",
     "Screen reader support": "屏幕阅读器支持",
     "Select different theme from here": "从这里选择不同的主题",
     "Self-made Stars:": "自建星球：",
@@ -1089,7 +1089,7 @@ var cnItems = {
     "Minute": "分钟",
     "Upgrades and Researches for": "升级与研究",
     "until": "直到",
-    "Void rewards:": "虚空奖励:",
+    "Void rewards:": "虚空奖励：",
     "Vacuum": "真空",
     "Which is equal to": "它等于",
     "Visually hide body scrollbar": "视觉上隐藏主体滚动条",
@@ -4750,6 +4750,7 @@ var cnRegReplace = new Map([
         "enable Mobile Device support": { "#URLDataInfoMenu": "启用移动设备支持" },
         "enable Screen Reader support": { "#URLDataInfoMenu": "启用屏幕阅读器支持" },
         "Keys are case sensitive, no square brackets": { "#URLDataInfoMenu": "键名区分大小写，不要加方括号" },
+        "(Not completed)": "（未完成）",
         // —— 2026-11 上游更新：其他新增文本 ——
         "can do Big Rip instead of Big Crunch": "可以执行大撕裂来代替大收缩"
     };
@@ -5771,7 +5772,12 @@ var cnRegReplace = new Map([
         [/^(.+?) ago$/, '$1 前'],
         [/^(.+?) years$/, '$1 年'],
         [/^(.+?) years (.+?) days$/, '$1 年 $2 天'],
-        [/^(.+?) rewards:$/, '$1 奖励：'],
+        [/^(.+?) rewards:$/, function (full, name) {
+            if (typeof cnItems[full] === 'string') { return cnItems[full]; }
+            return w(name) + '奖励：';
+        }],
+        [/^(.+) Completions, can be increased by Merging Galaxies while inside\nAlso gain a single Inflaton after (.+) more completions?$/,
+            '已有 $1 次完成，可以通过在挑战中合并星系来增加\n再完成 $2 次可以获得一个膨胀点'],
         [/^(.+?) \(outdated\)$/, '$1（已过时）'],
         [/^\[(\d+)\] (.+)$/, function (m, a, b) { return '[' + a + '] ' + w(b); }],
         [/^(.+?)\. \(Level (.+?) out of (.+?)\)$/, function (m, a, b, c) { return w(a) + '。（等级 ' + b + ' / ' + c + '）'; }],
