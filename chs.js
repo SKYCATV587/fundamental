@@ -6132,8 +6132,20 @@ var cnRegReplace = new Map([
         [/^Another Alert is already active\nMissed text: ([\s\S]+)$/, '已有另一个提示处于活动状态\n错过的文本：$1'],
         [/^Wasn't able to show event (.+?), event text:\n([\s\S]+)$/, '无法显示事件 $1，事件文本：\n$2'],
         [/^Milestone '(.+?)' new tier completed(, Maxed)?$/, function (m, a, b) { return '里程碑“' + w(a) + '”新层级已完成' + (b ? '，已满级' : ''); }],
-        [/^New Void reward unlocked:\n([\s\S]+)$/, '新虚空奖励已解锁：\n$1'],
-        [/^New Supervoid reward unlocked:\n([\s\S]+)$/, '新超级虚空奖励已解锁：\n$1'],
+        [/^New Void reward unlocked:\n([\s\S]+)$/, function (full, reward) {
+            var tail = '';
+            var m2 = /^(.*) \| x(\d+)$/.exec(reward);
+            if (m2) { tail = ' | x' + m2[2] + ' 次'; reward = m2[1]; }
+            var key = 'New Void reward unlocked:\n' + reward;
+            return (typeof cnItems[key] === 'string' ? cnItems[key] : '新虚空奖励已解锁：\n' + reward) + tail;
+        }],
+        [/^New Supervoid reward unlocked:\n([\s\S]+)$/, function (full, reward) {
+            var tail = '';
+            var m2 = /^(.*) \| x(\d+)$/.exec(reward);
+            if (m2) { tail = ' | x' + m2[2] + ' 次'; reward = m2[1]; }
+            var key = 'New Supervoid reward unlocked:\n' + reward;
+            return (typeof cnItems[key] === 'string' ? cnItems[key] : '新超级虚空奖励已解锁：\n' + reward) + tail;
+        }],
         [/^Time limit has been reached for (.+)$/, function (m, a) {
             if (a === 'all Milestones') { return '所有里程碑的时间限制已到'; }
             return w(a.replace(/^the /, '')) + '的时间限制已到';
