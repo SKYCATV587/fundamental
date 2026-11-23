@@ -3487,6 +3487,9 @@ var cnRegReplace = new Map([
     [/^(.+) Dark energy. \[x(.+)\]$/, '$1 暗能量。[x$2]'],
     [/^(.+) Inflatons. \[x(.+)\]$/, '$1 膨胀点。[x$2]'],
     [/^(.+) Inflatons.$/, '$1 膨胀点。'],
+    [/^(.+) Tachyons. \[x(.+)\]$/, function (m, a, b) { return (a === 'Infinity' || a === '∞' ? '无限' : a) + ' 快子。[x' + b + ']'; }],
+    [/^(.+) Tachyons. \(Resets all Tachyons\)$/, function (m, a) { return (a === 'Infinity' || a === '∞' ? '无限' : a) + ' 快子。（重置所有快子）'; }],
+    [/^(.+) Tachyons.$/, function (m, a) { return (a === 'Infinity' || a === '∞' ? '无限' : a) + ' 快子。'; }],
     [/^(.+) Cosmons. \[x(.+)\]$/, '$1 宇宙点。[x$2]'],
     [/^(.+) Strange quarks. \[x(.+)\]$/, '$1 奇异夸克。[x$2]'],
     [/^Puddles will get a boost based on Moles \^(.+).\n\(Boost: (.+)\)$/, '水坑获得基于摩尔^$1 的加成。\n（加成为：$2）'],
@@ -3959,8 +3962,8 @@ var cnRegReplace = new Map([
         '卫星可改进剩余的结构，但以被削弱的强度（^$1）。\n（受影响的结构有宇宙尘埃和微行星，加成等于 $2）'],
     [/^(.+) Completions \(WIP\)$/, '$1 次完成 （制作中）'],
     [/^Complete with (.+) self-made Universes$/, '在 $1 自建宇宙时完成'],
-    [/^Big Crunch for (.+) Cosmons$/, '大收缩以获得 $1 宇宙子'],
-    [/^Big Rip for (.+) Cosmons$/, '大撕裂以获得 $1 宇宙子'],
+    [/^Big Crunch for (.+)$/, '大收缩以获得 $1'],
+    [/^Big Rip for (.+)$/, '大撕裂以获得 $1'],
     [/^(.+) or$/, '$1 或'],
     [/^(.+) Cosmons per hour$/, '每小时 $1 宇宙子'],
     [/^(.+) Cosmons per day$/, '每天 $1 宇宙子'],
@@ -4751,6 +4754,7 @@ var cnRegReplace = new Map([
         "enable Screen Reader support": { "#URLDataInfoMenu": "启用屏幕阅读器支持" },
         "Keys are case sensitive, no square brackets": { "#URLDataInfoMenu": "键名区分大小写，不要加方括号" },
         "(Not completed)": "（未完成）",
+        "Universe types": "种宇宙类型",
         // —— 2026-11 上游更新：其他新增文本 ——
         "can do Big Rip instead of Big Crunch": "可以执行大撕裂来代替大收缩"
     };
